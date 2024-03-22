@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GeneralVariableTable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Version>1.0</Version>
+  <Variables>
+    <Variable Name="set_f_target" Address="0" DataType="INT" FuncCode="WRITE_MULTIPLE_REGISTER" />
+	<Variable Name="set_f_zero" Address="1" DataType="INT" FuncCode="WRITE_MULTIPLE_REGISTER"/>
+	<Variable Name="set_t_ramp" Address="2" DataType="UINT" FuncCode="WRITE_MULTIPLE_REGISTER"/>
+	<Variable Name="set_payload" Address="3" DataType="UINT" FuncCode="WRITE_MULTIPLE_REGISTER"/>
+	<Variable Name="act_force" Address="10" DataType="INT" FuncCode="READ_INPUT_REGISTER"/>
+	<Variable Name="act_position" Address="11" DataType="UINT" FuncCode="READ_INPUT_REGISTER"/>
+	<Variable Name="act_contact_state" Address="12" DataType="UINT" FuncCode="READ_INPUT_REGISTER"/>
+	<Variable Name="act_error_code" Address="13" DataType="UINT" FuncCode="READ_INPUT_REGISTER"/>
+  </Variables>
+</GeneralVariableTable>
