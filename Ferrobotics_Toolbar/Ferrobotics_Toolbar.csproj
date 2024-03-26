@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="TMcraft">
+      <HintPath>..\..\..\TMcraft\TMcraft.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="ViewStyle\BorderStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Update="ViewStyle\ButtonStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Update="ViewStyle\LabelStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Page>
+  </ItemGroup>
+
+</Project>

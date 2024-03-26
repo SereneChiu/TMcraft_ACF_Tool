@@ -1,0 +1,56 @@
+<UserControl x:Class="Ferrobotics_Toolbar.ToolbarUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ferrobotics_Toolbar"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="440">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/LabelStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/TextBoxStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <DockPanel VerticalAlignment="Top">
+        <Border BorderBrush="LightGray" BorderThickness="3" Width="435" Height="700">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Connect Status:" Grid.ColumnSpan="3"  />
+                <CheckBox Grid.Row="2" Grid.Column="0" Content="Check to edit parameters" IsChecked="{Binding Edit_Mode, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Grid.ColumnSpan="3" FontFamily="Global Sans Serif" HorizontalAlignment="Left" VerticalContentAlignment="Center" Name="chb_edit_mode" />
+                <Label Grid.Row="3" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
+                <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" Name="tb_f_target" />
+                <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" Name="tb_f_zero" />
+                <TextBox Grid.Row="6" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_ramp:" Name="tb_f_ramp" />
+                <TextBox Grid.Row="7" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_payload:" Name="tb_f_payload" />
+
+                <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N:" Name="tb_f_target_unit" />
+                <TextBox Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N:" Name="tb_f_zero_unit" />
+                <TextBox Grid.Row="6" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s:" Name="tb_f_ramp_unit" />
+                <TextBox Grid.Row="7" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="kg:" Name="tb_f_payload_unit" />
+
+            </Grid>
+        </Border>
+    </DockPanel>
+</UserControl>

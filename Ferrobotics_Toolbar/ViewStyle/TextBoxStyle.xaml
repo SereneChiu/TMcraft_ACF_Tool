@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="Global Sans Serif"/>
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="VerticalAlignment" Value="Bottom"/>
+        <Setter Property="IsEnabled" Value="{Binding Edit_Mode, UpdateSourceTrigger=PropertyChanged}"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderBrush" Value="White"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderBrush" Value="White"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

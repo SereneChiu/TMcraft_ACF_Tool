@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using ModbusVariableManager;
+using Ferrobotics_Toolbar;
 
 namespace TMcraft_ACF_K_UserControl
 {
@@ -59,5 +60,20 @@ namespace TMcraft_ACF_K_UserControl
             tb_recv.Text = recv_data;
         }
 
+        private void btn_toolbar_Click(object sender, RoutedEventArgs e)
+        {
+            Window win_tool = new Window();
+            win_tool.Width = 440;
+            win_tool.Height = 700;
+            win_tool.Content = new ToolbarUserControl();
+            win_tool.Title = "Toolbar";
+            win_tool.WindowStyle = WindowStyle.ToolWindow;
+            win_tool.Show();
+        }
+
+        private void btn_node_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
