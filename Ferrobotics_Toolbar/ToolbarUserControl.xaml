@@ -11,45 +11,122 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/LabelStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/ButtonStyle.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel VerticalAlignment="Top">
-        <Border BorderBrush="LightGray" BorderThickness="3" Width="435" Height="700">
+        <Border BorderBrush="LightGray" BorderThickness="3" Width="440" Height="700">
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="92"/>
+                    <RowDefinition Height="600"/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Connect Status:" Grid.ColumnSpan="3"  />
-                <CheckBox Grid.Row="2" Grid.Column="0" Content="Check to edit parameters" IsChecked="{Binding Edit_Mode, UpdateSourceTrigger=PropertyChanged}" FontSize="20" Grid.ColumnSpan="3" FontFamily="Global Sans Serif" HorizontalAlignment="Left" VerticalContentAlignment="Center" Name="chb_edit_mode" />
-                <Label Grid.Row="3" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
-                <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" Name="tb_f_target" />
-                <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" Name="tb_f_zero" />
-                <TextBox Grid.Row="6" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_ramp:" Name="tb_f_ramp" />
-                <TextBox Grid.Row="7" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_payload:" Name="tb_f_payload" />
+                <Grid Grid.Row="0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="1"/>
+                        </Grid.RowDefinitions>
+                        <CheckBox Grid.Row="0" Grid.Column="0" Content="Check to edit parameters" IsChecked="{Binding Edit_Mode, UpdateSourceTrigger=PropertyChanged}" FontSize="16" Grid.ColumnSpan="3" FontFamily="Global Sans Serif" HorizontalAlignment="Left" VerticalContentAlignment="Center" Name="chb_edit_mode" />
+                        <Border Grid.Row="1" Grid.ColumnSpan="4" >
+                            <Image Source="/Ferrobotics_Toolbar;component/Resources/line.png" Stretch="Fill" Margin="10 0 20 0" />
+                        </Border>
+                        <Label Grid.Row="2" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Connect Settings:" Grid.ColumnSpan="3"  />
+                        <Label Grid.Row="3" Grid.Column="0" Content="IP:" Style="{DynamicResource LabelStyle}"/>
+                        <Label Grid.Row="3" Grid.Column="2" Content="Port:" Style="{DynamicResource LabelStyle}"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding IP, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}"/>
+                        <TextBox Grid.Row="3" Grid.Column="3" Text="{Binding Port, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}"/>
 
-                <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N:" Name="tb_f_target_unit" />
-                <TextBox Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N:" Name="tb_f_zero_unit" />
-                <TextBox Grid.Row="6" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s:" Name="tb_f_ramp_unit" />
-                <TextBox Grid.Row="7" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="kg:" Name="tb_f_payload_unit" />
+                        <Border Grid.Row="4" Grid.ColumnSpan="4" >
+                            <Image Source="/Ferrobotics_Toolbar;component/Resources/line.png" Stretch="Fill" Margin="10 0 20 0" />
+                        </Border>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="190"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="1"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="1"/>
 
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Connect Status:"/>
+                    <Label Grid.Row="0" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding ConnectState, UpdateSourceTrigger=PropertyChanged}" />
+                    <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Name="btn_connect" Click="btn_connect_Click"  Style="{DynamicResource BtnStyle_Connect}" />
+
+                    <Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
+                   
+                    <TextBox Grid.Row="2" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
+                    <TextBox Grid.Row="3" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
+                    <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_ramp:" />
+                    <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_payload:" />
+
+                    <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+                    <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+                    <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParam3, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+
+                    <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
+                    <TextBox Grid.Row="3" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
+                    <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s" />
+                    <TextBox Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="kg" />
+
+                    <Border Grid.Row="6" Grid.ColumnSpan="4" >
+                        <Image Source="/Ferrobotics_Toolbar;component/Resources/line.png" Stretch="Fill" Margin="10 0 20 0"  />
+                    </Border>
+
+                    <Label Grid.Row="7" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Status:" />
+
+                    <TextBox Grid.Row="8" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="act_force:"  />
+                    <TextBox Grid.Row="9" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="act_position:"/>
+                    <TextBox Grid.Row="10" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="act_contact_state:"  />
+                    <TextBox Grid.Row="11" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="act_error_code:" />
+
+                    <Label Grid.Row="8" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam1, StringFormat={}{0:0.0}}"/>
+                    <Label Grid.Row="9" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam2, StringFormat={}{0:0.0}}"/>
+                    <Label Grid.Row="10" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam3, StringFormat={}{0:0.0}}" />
+                    <Label Grid.Row="11" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam4, StringFormat={}{0:0.0}}"/>
+
+                    <TextBox Grid.Row="8" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N"  />
+                    <TextBox Grid.Row="9" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="mm"/>
+                    <TextBox Grid.Row="10" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="bool"  />
+                    <TextBox Grid.Row="11" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="bit map" />
+
+                    <Border Grid.Row="12" Grid.ColumnSpan="3" >
+                        <Image Source="/Ferrobotics_Toolbar;component/Resources/line.png" Stretch="Fill" Margin="10 0 20 0"  />
+                    </Border>
+
+                    <Border Grid.Row="13" Grid.ColumnSpan="3" Padding="0 0 0 0" Margin="0 10 0 0" >
+                        <Image Source="/Ferrobotics_Toolbar;component/Resources/Ferrobotics.png" Stretch="Uniform"  Margin="0 0 0 0" />
+                    </Border>
+
+                </Grid>
             </Grid>
         </Border>
     </DockPanel>

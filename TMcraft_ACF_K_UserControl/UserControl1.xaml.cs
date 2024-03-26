@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using ModbusVariableManager;
+using VariableManager;
 using Ferrobotics_Toolbar;
 
 namespace TMcraft_ACF_K_UserControl
@@ -37,7 +37,7 @@ namespace TMcraft_ACF_K_UserControl
 
         private void btn_connect_Click(object sender, RoutedEventArgs e)
         {
-            mICommunicationCtrl.InitConnection();
+            mICommunicationCtrl.InitConnection("192.168.99.1", 7070);
 
             if (mICommunicationCtrl.ConnectState == "Normal")
             {

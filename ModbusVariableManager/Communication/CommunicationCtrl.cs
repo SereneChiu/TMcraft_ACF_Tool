@@ -15,12 +15,12 @@ using CommunityToolkit.HighPerformance;
 using CommunityToolkit.HighPerformance.Buffers;
 
 
-namespace ModbusVariableManager
+namespace VariableManager
 {
     public interface ICommunicationCtrl
     {
         string ConnectState { get; }
-        void InitConnection();
+        void InitConnection(string IP, ushort Port);
         string ReadData();
         void WriteData(string Cmd);
     }
@@ -30,9 +30,7 @@ namespace ModbusVariableManager
     {
         private bool mIsConnectServer = false;
 
-        private const string DEFAULTPORT = "7070";
-
-        private const int RCVBUFFERSIZE = 256; // buffer size for receive buffer
+        private const ushort DEFAULTPORT = 7070;
         private const string DEFAULTIP = "192.168.99.1";
 
         private TcpClient m_client;
@@ -42,11 +40,11 @@ namespace ModbusVariableManager
             get { return (mIsConnectServer == false) ? "Error" : "Normal"; }
         }
 
-        public void InitConnection()
+        public void InitConnection(string IP = DEFAULTIP, ushort Port = DEFAULTPORT)
         {
             try
             {
-                m_client = new TcpClient(DEFAULTIP, 7070);
+                m_client = new TcpClient(DEFAULTIP, DEFAULTPORT);
             }
             catch (ArgumentNullException a)
             {
