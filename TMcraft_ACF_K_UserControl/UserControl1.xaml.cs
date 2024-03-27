@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using VariableManager;
 using Ferrobotics_Toolbar;
+using Ferrobotics_Setup;
 
 namespace TMcraft_ACF_K_UserControl
 {
@@ -74,6 +75,18 @@ namespace TMcraft_ACF_K_UserControl
         private void btn_node_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void btn_setup_Click(object sender, RoutedEventArgs e)
+        {
+            Window win_tool = new Window();
+            win_tool.Width = 800;
+            win_tool.Height = 300;
+            win_tool.Content = new SetupUserControl();
+            win_tool.Title = "Toolbar";
+            win_tool.WindowStyle = WindowStyle.ToolWindow;
+            win_tool.Show();
+             
         }
     }
 }

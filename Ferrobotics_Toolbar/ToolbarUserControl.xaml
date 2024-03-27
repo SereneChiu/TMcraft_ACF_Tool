@@ -12,7 +12,6 @@
                 <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/LabelStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Toolbar;component/ViewStyle/ButtonStyle.xaml"/>
-
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
