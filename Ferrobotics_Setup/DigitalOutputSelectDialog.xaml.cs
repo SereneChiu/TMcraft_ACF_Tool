@@ -24,5 +24,14 @@ namespace Ferrobotics_Setup
         {
             InitializeComponent();
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (page_do == null) { return; }
+            Button btn = new Button();
+            btn.Content = "Hello";
+            page_do.Children.Add(btn);
+
+        }
     }
 }

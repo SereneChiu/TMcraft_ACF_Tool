@@ -26,7 +26,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" >
                     <Label Content="Digital output type:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
-                    <ComboBox Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="16">
+                    <ComboBox Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="16" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="Control Box"></ComboBoxItem>
                         <ComboBoxItem Content="End Module"></ComboBoxItem>
                     </ComboBox>
@@ -35,6 +35,7 @@
                     <Label Content="Channel count:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
                     <TextBox Width="200" Text="{Binding DoChannelCount}" Style="{DynamicResource TextBoxStyle}" HorizontalAlignment="Left"/>
                 </DockPanel>
+                <Canvas Name="page_do" Grid.Row="2"/>
                 <DockPanel Grid.Row="3" Margin="200 0 100 0">
                     <Button Name="btn_test_output" Content="Test Output" Width="100" Style="{DynamicResource StandardButton}" />
                     <Button Name="btn_ok" Content="OK" Width="100" Style="{DynamicResource StandardButton}"/>
