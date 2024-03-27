@@ -5,12 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.2.2">
-      <GeneratePathProperty>True</GeneratePathProperty>
-    </PackageReference>
+    <Reference Include="CommunityToolkit.HighPerformance">
+      <HintPath>C:\Users\serene.chiu\.nuget\packages\communitytoolkit.highperformance\8.2.2\lib\net6.0\CommunityToolkit.HighPerformance.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
 
 </Project>

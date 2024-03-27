@@ -23,12 +23,15 @@ namespace Ferrobotics_Toolbar
         private string mIp = "192.168.99.1";
         private ushort mPort = 7070;
         private string mConnectState = "Unknown";
+        private string mWriteData = "ferbak1040 0 0 0 0 0";
+
 
         public bool Edit_Mode { get { return mEdit_Mode; } set { mEdit_Mode = value; NotifyPropertyChanged("Edit_Mode"); } }
 
         public string IP { get { return mIp; } set { mIp = value; NotifyPropertyChanged("IP"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
         public string ConnectState { get { return mConnectState; } set { mConnectState = value; NotifyPropertyChanged("ConnectState"); } }
+        public string WriteData { get { return mWriteData; } set { mWriteData = value; NotifyPropertyChanged("WriteData"); } }
 
         public decimal SetParam1 { get { return mSetParam1; } set { mSetParam1 = value; NotifyPropertyChanged("SetParam1"); } }
         public decimal SetParam2 { get { return mSetParam2; } set { mSetParam2 = value; NotifyPropertyChanged("SetParam2"); } }

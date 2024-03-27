@@ -79,14 +79,8 @@ namespace Ferrobotics_Toolbar
         public void TimerFunction(object? sender, EventArgs e)
         {
             if (mToolbarViewModel.ConnectState != "Normal") { return; }
-
-            //"ferbak1040 21 0.5 0.5 0.5 0"
-            string data_write = string.Format("ferbak1040 {0} {1} {2} {3} 0"
-                                             , mToolbarViewModel.SetParam1.ToString()
-                                             , mToolbarViewModel.SetParam2.ToString()
-                                             , mToolbarViewModel.SetParam3.ToString()
-                                             , mToolbarViewModel.SetParam4.ToString());
-            mCommunicationCtrl.WriteData(data_write);
+         
+            mCommunicationCtrl.WriteData(mToolbarViewModel.WriteData);
 
             string[] data_read = mCommunicationCtrl.ReadData().Split(' ');
             if (data_read.Length == 5) 
@@ -98,7 +92,18 @@ namespace Ferrobotics_Toolbar
             }
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (mToolbarViewModel.ConnectState != "Normal") { return; }
 
+            string data_write = string.Format("ferbak1040 {0} {1} {2} {3} 0"
+                                             , mToolbarViewModel.SetParam1.ToString()
+                                             , mToolbarViewModel.SetParam2.ToString()
+                                             , mToolbarViewModel.SetParam3.ToString()
+                                             , mToolbarViewModel.SetParam4.ToString());
+
+            mToolbarViewModel.WriteData = data_write;
+        }
     }
 
 
