@@ -29,7 +29,7 @@ namespace Ferrobotics_Setup
         private void btn_browse_Click(object sender, RoutedEventArgs e)
         {
             Window win_tool = new Window();
-            win_tool.Width = 600;
+            win_tool.Width = 800;
             win_tool.Height = 300;
             win_tool.Content = new DigitalOutputSelectDialog();
             win_tool.Title = "Digital Output Select Dialog";

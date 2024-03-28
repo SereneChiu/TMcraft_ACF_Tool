@@ -5,17 +5,18 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ferrobotics_Setup"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="600">
+             d:DesignHeight="300" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Ferrobotics_Setup;component/ViewStyle/LabelStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Setup;component/ViewStyle/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Setup;component/ViewStyle/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Setup;component/ViewStyle/CheckBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel VerticalAlignment="Top" Height="300" Width="600">
+    <DockPanel VerticalAlignment="Top" Height="300" Width="800">
         <Border>
             <Grid>
                 <Grid.RowDefinitions>
@@ -25,20 +26,20 @@
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" >
-                    <Label Content="Digital output type:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
-                    <ComboBox Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="16" SelectionChanged="ComboBox_SelectionChanged">
+                    <Label Margin="10 0 0 0" Content="Digital output type:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
+                    <ComboBox Name="cb_do_type" Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="16" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="Control Box"></ComboBoxItem>
                         <ComboBoxItem Content="End Module"></ComboBoxItem>
                     </ComboBox>
                 </DockPanel>
                 <DockPanel Grid.Row="1">
-                    <Label Content="Channel count:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
-                    <TextBox Width="200" Text="{Binding DoChannelCount}" Style="{DynamicResource TextBoxStyle}" HorizontalAlignment="Left"/>
+                    <Label Margin="10 0 0 0" Content="Channel count:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
+                    <TextBox Width="200" Text="{Binding DoCount, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyle}" HorizontalAlignment="Left"/>
                 </DockPanel>
                 <Canvas Name="page_do" Grid.Row="2"/>
                 <DockPanel Grid.Row="3" Margin="200 0 100 0">
-                    <Button Name="btn_test_output" Content="Test Output" Width="100" Style="{DynamicResource StandardButton}" />
-                    <Button Name="btn_ok" Content="OK" Width="100" Style="{DynamicResource StandardButton}"/>
+                    <Button Name="btn_test_output" Content="Test Output" Width="100" Style="{DynamicResource StandardButton}" Click="btn_test_output_Click" />
+                    <Button Name="btn_ok" Content="OK" Width="100" Style="{DynamicResource StandardButton}" Click="btn_ok_Click"/>
                 </DockPanel>
             </Grid>
         </Border>
