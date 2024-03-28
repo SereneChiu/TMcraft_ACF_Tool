@@ -22,16 +22,40 @@ namespace Ferrobotics_Setup
     {
 
         private SetupModel mSetupModel = new SetupModel();
+   
+        private static List<string> var_name_list = new List<string>()
+        {
+            "var_ferrobotics_ip"
+          , "var_ferrobotics_port"
+          , "var_ferrobotics_do_type"
+          , "var_ferrobotics_do_channel"
+          , "var_ferrobotics_do_status"
+        };
+
+        private Dictionary<string, VariableModel> mVarDict = new Dictionary<string, VariableModel>();
 
         public SetupUserControl()
         {
             DataContext = mSetupModel;
             InitializeComponent();
+            InitDictData();
         }
 
         public void InitializeSetup(TMcraftSetupAPI TMcraftSetupAPI)
         {
             mSetupModel.TMcraftSetupAPI = TMcraftSetupAPI;
+        }
+
+        private void InitDictData()
+        {
+            mVarDict = new Dictionary<string, VariableModel>()
+            {
+                { var_name_list[0], new VariableModel(var_name_list[0], VariableType.String, mSetupModel.Ip) }
+              , { var_name_list[1], new VariableModel(var_name_list[1], VariableType.Integer, mSetupModel.Port) }
+              , { var_name_list[2], new VariableModel(var_name_list[2], VariableType.Integer, mSetupModel.CurSelectDoType) }
+              , { var_name_list[3], new VariableModel(var_name_list[3], VariableType.Integer, mSetupModel.CurSelectDoIdx) }
+              , { var_name_list[4], new VariableModel(var_name_list[3], VariableType.Boolean, mSetupModel.DoStatus) }
+            };
         }
 
         private void btn_browse_Click(object sender, RoutedEventArgs e)
@@ -47,24 +71,7 @@ namespace Ferrobotics_Setup
             win_tool.Show();
         }
 
-        private static List<string> var_name_list = new List<string>()
-        { 
-            "var_ferrobotics_ip"
-          , "var_ferrobotics_port"
-          , "var_ferrobotics_do_type"
-          , "var_ferrobotics_do_channel"
-          , "var_ferrobotics_do_status"
-        };
-
-        private Dictionary<string, VariableModel> mVarDict = new Dictionary<string, VariableModel>()
-        {
-            { var_name_list[0], new VariableModel(var_name_list[0], VariableType.String) }
-          , { var_name_list[1], new VariableModel(var_name_list[1], VariableType.Integer) }
-          , { var_name_list[2], new VariableModel(var_name_list[2], VariableType.Integer) }
-          , { var_name_list[3], new VariableModel(var_name_list[3], VariableType.Integer) }
-          , { var_name_list[4], new VariableModel(var_name_list[3], VariableType.Boolean) }
-        };
-
+        
         private void btn_apply_Click(object sender, RoutedEventArgs e)
         {
             SetupVariableProvider variable_provider = mSetupModel.TMcraftSetupAPI.VariableProvider;

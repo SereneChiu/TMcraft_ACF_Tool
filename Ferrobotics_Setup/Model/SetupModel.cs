@@ -26,11 +26,13 @@ namespace Ferrobotics_Setup.Model
         private ushort mPort = 7070;
         private string mDevName = "ACF-K ER";
         private string mConnectState = "Unknown";
+        private bool mDoStatus = false;
 
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
         public string DeviceName { get { return mDevName; } set { mDevName = value; NotifyPropertyChanged("DeviceName"); } }
         public string ConnectState { get { return mConnectState; } set { mConnectState = value; NotifyPropertyChanged("ConnectState"); } }
+        public bool DoStatus { get { return mDoStatus; } set { mDoStatus = value; NotifyPropertyChanged("DoStatus"); } }
 
         public ushort CurSelectDoIdx 
         { 
