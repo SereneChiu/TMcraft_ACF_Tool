@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ferrobotics_Setup"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1000">
+             d:DesignHeight="500" d:DesignWidth="1000">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,35 +15,33 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel VerticalAlignment="Top">
-        <Border BorderBrush="LightGray" BorderThickness="3" Height="700" Width="1000">
+    <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+        <Border BorderBrush="Transparent" BorderThickness="3" Height="500" Width="1000">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="500"/>
+                    <ColumnDefinition Width="600"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Margin="0 0 10 0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="220"/>
+                        <ColumnDefinition Width="260"/>
                         <ColumnDefinition Width="180"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Set the connection of the Ferrobotics Device:"  Grid.ColumnSpan="2" Style="{DynamicResource LabelStyle}"/>
-                    <Label Grid.Row="1" Grid.Column="0" Content="Connect state:" Style="{DynamicResource LabelStyle}"/>
                     <Label Grid.Row="2" Grid.Column="0" Content="IP:"  Style="{DynamicResource LabelStyle}"/>
                     <Label Grid.Row="3" Grid.Column="0" Content="Port:"  Style="{DynamicResource LabelStyle}"/>
                     <Label Grid.Row="4" Grid.Column="0" Content="Device name:"  Style="{DynamicResource LabelStyle}"/>
                     <Label Grid.Row="5" Grid.Column="0" Content="Digital output for pneumatic:"  Style="{DynamicResource LabelStyle}"/>
-                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding ConnectState}" Style="{DynamicResource LabelStyle}"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ip}" Style="{DynamicResource TextBoxStyleForWrite}"/>
                     <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Port}" Style="{DynamicResource TextBoxStyleForWrite}"/>
                     <TextBox Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DeviceName}" Style="{DynamicResource TextBoxStyle}"/>

@@ -80,8 +80,8 @@ namespace TMcraft_ACF_K_UserControl
         private void btn_setup_Click(object sender, RoutedEventArgs e)
         {
             Window win_tool = new Window();
-            win_tool.Width = 800;
-            win_tool.Height = 300;
+            win_tool.Width = 900;
+            win_tool.Height = 600;
             win_tool.Content = new SetupUserControl();
             win_tool.Title = "Toolbar";
             win_tool.WindowStyle = WindowStyle.ToolWindow;

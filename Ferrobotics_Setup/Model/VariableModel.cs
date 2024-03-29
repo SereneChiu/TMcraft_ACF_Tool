@@ -11,9 +11,9 @@ namespace Ferrobotics_Setup.Model
     {
         public string VarName { get; set; }
         public VariableType VarType { get; set; }
-        public object VarValue { get; set; }
+        public string VarValue { get; set; }
 
-        public VariableModel(string VarName, VariableType VarType, object VarValue = null)
+        public VariableModel(string VarName, VariableType VarType, string VarValue)
         {
             this.VarName = VarName;
             this.VarType = VarType;

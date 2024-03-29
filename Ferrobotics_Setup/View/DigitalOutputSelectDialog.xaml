@@ -27,7 +27,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" >
                     <Label Margin="10 0 0 0" Content="Digital output type:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
-                    <ComboBox Name="cb_do_type" Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="16" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox Name="cb_do_type" Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="20" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="Control Box"></ComboBoxItem>
                         <ComboBoxItem Content="End Module"></ComboBoxItem>
                     </ComboBox>
@@ -38,7 +38,8 @@
                 </DockPanel>
                 <Canvas Name="page_do" Grid.Row="2"/>
                 <DockPanel Grid.Row="3" Margin="200 0 100 0">
-                    <Button Name="btn_test_output" Content="Test Output" Width="100" Style="{DynamicResource StandardButton}" Click="btn_test_output_Click" />
+                    <Button Name="btn_test_output" Content="Test Output" Width="120" Style="{DynamicResource StandardButton}" Click="btn_test_output_Click" />
+                    <Button Name="btn_clear_all" Margin="70 0 0 0" Content="Clear All" Width="100" Style="{DynamicResource StandardButton}" Click="btn_clear_all_Click"/>
                     <Button Name="btn_ok" Content="OK" Width="100" Style="{DynamicResource StandardButton}" Click="btn_ok_Click"/>
                 </DockPanel>
             </Grid>

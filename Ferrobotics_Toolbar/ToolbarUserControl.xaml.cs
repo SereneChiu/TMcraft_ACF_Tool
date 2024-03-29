@@ -41,7 +41,7 @@ namespace Ferrobotics_Toolbar
         {
             if (e.Key == Key.Tab && (Keyboard.Modifiers & (ModifierKeys.Control)) == (ModifierKeys.Control))
             {
-                chb_edit_mode.Visibility = Visibility.Visible;
+                chb_edit_mode.Visibility = (chb_edit_mode.Visibility == Visibility.Visible) ? Visibility.Hidden : Visibility.Visible;
             }
         }
 
@@ -79,7 +79,12 @@ namespace Ferrobotics_Toolbar
         public void TimerFunction(object? sender, EventArgs e)
         {
             if (mToolbarViewModel.ConnectState != "Normal") { return; }
-         
+
+            bool rtn_run = false;
+            mTMcraftToolbarAPI.RobotStatusProvider.ProjectRunOrNot(out rtn_run);
+
+            if (rtn_run == true) { return; }
+
             mCommunicationCtrl.WriteData(mToolbarViewModel.WriteData);
 
             string[] data_read = mCommunicationCtrl.ReadData().Split(' ');

@@ -26,6 +26,9 @@ namespace Ferrobotics_Setup
     {
         private readonly SetupModel mSetupModel = null;
         private List<RadioButton> mChbList = new List<RadioButton>();
+        
+        public bool SaveData { get; private set; }
+
 
         public DigitalOutputSelectDialog(SetupModel SetupModel)
         {
@@ -34,6 +37,16 @@ namespace Ferrobotics_Setup
             mSetupModel.CallbackFunc = UpdateDataFromUserDefine;
             InitializeComponent();
             UpdateDoChannelFromCombobox();
+            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
+
+        }
+
+        private void HandleKeyDownEvent(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab && (Keyboard.Modifiers & (ModifierKeys.Control)) == (ModifierKeys.Control))
+            {
+                mSetupModel.Edit_Mode = !mSetupModel.Edit_Mode;
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -117,6 +130,7 @@ namespace Ferrobotics_Setup
             mSetupModel.CurSelectDoIdx = rtn_channel;
 
             if (false == (this.Parent is Window)) { return; }
+            SaveData = true;
             ((Window)(this.Parent as Window)).Close();
         }
 
@@ -142,6 +156,17 @@ namespace Ferrobotics_Setup
             ushort rtn_channel = 0;
             if (false == GetEnableDoChannel(ref rtn_channel)) { return; }
 
+        }
+
+        private void btn_clear_all_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (RadioButton chb in mChbList)
+            {
+                if (chb.IsChecked == true)
+                {
+                    chb.IsChecked = false;
+                }
+            }
         }
     }
 }
