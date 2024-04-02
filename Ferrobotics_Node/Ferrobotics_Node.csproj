@@ -7,4 +7,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ferrobotics_Controller\Ferrobotics_Controller.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="TMcraft">
+      <HintPath>..\..\..\TMcraft\TMcraft.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
