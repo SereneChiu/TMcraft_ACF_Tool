@@ -1,0 +1,51 @@
+<UserControl x:Class="Ferrobotics_Controller.SetDataUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Ferrobotics_Controller"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="440">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/LabelStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/ButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="190"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
+        <Button Grid.Row="0" Grid.Column="1" Content="Write Data" Click="Button_Click" Style="{DynamicResource StandardButton}"/>
+
+        <TextBox Grid.Row="1" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
+        <TextBox Grid.Row="2" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
+        <TextBox Grid.Row="3" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_ramp:" />
+        <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_payload/RPM:" />
+
+        <TextBox Grid.Row="1" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam3, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+
+        <TextBox Grid.Row="1" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
+        <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
+        <TextBox Grid.Row="3" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s" />
+        <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="kg" />
+
+    </Grid>
+</UserControl>

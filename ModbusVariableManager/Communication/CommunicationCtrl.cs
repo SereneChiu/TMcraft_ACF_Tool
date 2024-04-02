@@ -19,22 +19,25 @@ namespace VariableManager
 {
     public class CommunicationCtrl : ICommunicationCtrl
     {
-        private bool mIsConnectServer = false;
-
         private const ushort DEFAULTPORT = 7070;
         private const string DEFAULTIP = "192.168.99.1";
 
         private TcpClient m_client;
 
+
         public string ConnectState
         {
-            get { return (mIsConnectServer == false) ? "Error" : "Normal"; }
+            get { return (m_client?.Connected == true) ? "Normal" : "Error"; }
         }
 
-        public void InitConnection(string IP = DEFAULTIP, ushort Port = DEFAULTPORT)
+        public void InitConnection(string IP = DEFAULTIP, ushort Port = DEFAULTPORT, bool ForceConnect = false)
         {
             try
             {
+                if (m_client != null && ForceConnect == false)
+                {
+                    if (ConnectState == "Normal") { return; }
+                }
                 m_client = new TcpClient(DEFAULTIP, DEFAULTPORT);
             }
             catch (ArgumentNullException a)
@@ -45,32 +48,32 @@ namespace VariableManager
             {
                 Console.WriteLine("SocketException:{0}", ex);
             }
-
-            mIsConnectServer = true;
         }
 
         public string ReadData()
         {
-            ReadOnlySpan<byte> rtn = ReadUntilTimeout(m_client.GetStream());
+            ReadOnlySpan<byte> rtn = ReadUntilTimeout();
             return Encoding.ASCII.GetString(rtn);
         }
 
         public void WriteData(string Cmd)
         {
-            var data = Encoding.GetEncoding(20127).GetBytes(Cmd);
-            var stm = m_client.GetStream();
-            stm.Write(data, 0, data.Length);
-            stm.Flush();
-        }
-        
-        private void CheckConnection()
-        {
-            if (m_client.Connected == false)
+            try
             {
-                InitConnection();
+                var data = Encoding.GetEncoding(20127).GetBytes(Cmd);
+                var stm = m_client.GetStream();
+                if (m_client.Connected == false) { return; }
+                stm.Write(data, 0, data.Length);
+                stm.Flush();
+            }
+            catch (InvalidOperationException) { }
+
+            catch (IOException ioe) when (ioe.InnerException is SocketException soe)
+            {
+
             }
         }
-
+     
         public void WaitForData(NetworkStream stream, TimeSpan? timeout)
         {
             if (timeout is null) return;
@@ -80,37 +83,43 @@ namespace VariableManager
             stream.ReadTimeout = originalReadTimeout;
         }
 
-        public ReadOnlySpan<byte> ReadUntilTimeout(NetworkStream stream,
-            TimeSpan? startTimeout = null,
-            TimeSpan? readTimeout = null,
-            int bufferSize = 8192)
+        public ReadOnlySpan<byte> ReadUntilTimeout(TimeSpan? startTimeout = null,
+                                                   TimeSpan? readTimeout = null,
+                                                   int bufferSize = 8192)
         {
+            var writer = new ArrayPoolBufferWriter<byte>();
+            int readSize = -1;
+
             startTimeout = TimeSpan.FromSeconds(10);
             readTimeout = TimeSpan.FromMilliseconds(20);
 
-            stream.ReadTimeout = (int?)readTimeout?.TotalMilliseconds ?? stream.ReadTimeout;
-            // if no data arrives within the start timeout a SocketException will be thrown!
-            // ReadTimeout is automatically reset inside the wait bellow after it completes
-
-            WaitForData(stream, startTimeout);
-            var writer = new ArrayPoolBufferWriter<byte>();
-            int readSize = -1;
             try
             {
+                var stm = m_client.GetStream();
+                if (m_client.Connected == false) { return writer.WrittenSpan; }
+
+                stm.ReadTimeout = (int?)readTimeout?.TotalMilliseconds ?? stm.ReadTimeout;
+                // if no data arrives within the start timeout a SocketException will be thrown!
+                // ReadTimeout is automatically reset inside the wait bellow after it completes
+
+                WaitForData(stm, startTimeout);
+
                 while (readSize != 0)
                 {
                     var buffer = writer.GetSpan(bufferSize);
-                    readSize = stream.Read(buffer);
+                    readSize = stm.Read(buffer);
                     writer.Advance(readSize);
                 }
             }
+            catch (InvalidOperationException) { }
             catch (IOException ioe) when (ioe.InnerException is SocketException soe)
             {
                 // ignores read timeout errors since that's what we want: read until closed or no more data available
-                if (soe.SocketErrorCode != SocketError.TimedOut)
-                    throw soe;
+                //if (soe.SocketErrorCode != SocketError.TimedOut)
+                //    throw soe;
             }
             return writer.WrittenSpan;
+
         }
 
 

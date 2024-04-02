@@ -21,13 +21,14 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
+                    <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Label Name="lb_state" Content="None" Width="90" Grid.Column="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
                 <Button Name="btn_connect" Content="Connect" Grid.Column="1" Width="90" Click="btn_connect_Click" />
                 <Button Name="btn_write" Content="Write Data" Grid.Column="2" Width="90" Click="btn_write_Click" />
-                <Button Name="btn_toolbar" Content="Toolbar" Grid.Column="3" Width="90" Click="btn_toolbar_Click" />
-                <Button Name="btn_setup" Content="Setup" Grid.Column="3" Width="90" Click="btn_setup_Click" />
-                <Button Name="btn_node" Content="Node" Grid.Column="4" Width="90" Click="btn_node_Click" />
+                <Button Name="btn_toolbar" Content="Toolbar" Grid.Column="3" Width="60" Click="btn_toolbar_Click" />
+                <Button Name="btn_setup" Content="Setup" Grid.Column="4" Width="60" Click="btn_setup_Click" />
+                <Button Name="btn_node" Content="Node" Grid.Column="5" Width="60" Click="btn_node_Click" />
             </Grid>
         </DockPanel>
         <Label Content="Send:" Grid.Row="1"/>

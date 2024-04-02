@@ -9,7 +9,7 @@ namespace VariableManager
     public interface ICommunicationCtrl
     {
         string ConnectState { get; }
-        void InitConnection(string IP, ushort Port);
+        void InitConnection(string IP, ushort Port, bool ForceConnect = false);
         string ReadData();
         void WriteData(string Cmd);
     }

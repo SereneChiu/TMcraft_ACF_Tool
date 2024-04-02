@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ferrobotics_Controller\Ferrobotics_Controller.csproj" />
     <ProjectReference Include="..\ModbusVariableManager\VariableManager.csproj" />
   </ItemGroup>
 

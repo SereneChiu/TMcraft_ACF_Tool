@@ -1,3 +1,4 @@
+using Ferrobotics_Controller;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
@@ -22,11 +23,12 @@ namespace Ferrobotics_Toolbar
     public partial class ToolbarUserControl : UserControl, ITMcraftToolbarEntry
     {
         private TMcraftToolbarAPI mTMcraftToolbarAPI = null;
+        private SetDataUserControl mSetDataUserControl = null;
+
         private ToolbarViewModel mToolbarViewModel = new ToolbarViewModel();
         private ICommunicationCtrl mCommunicationCtrl = new CommunicationCtrl();
 
         private static DispatcherTimer readDataTimer = new DispatcherTimer();
-
 
 
         public ToolbarUserControl()
@@ -35,6 +37,10 @@ namespace Ferrobotics_Toolbar
             DataContext = mToolbarViewModel;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
             chb_edit_mode.Visibility = Visibility.Hidden;
+
+            mSetDataUserControl = new SetDataUserControl(mToolbarViewModel.SetDataModel);
+            page_control.Content = mSetDataUserControl;
+
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
@@ -57,9 +63,9 @@ namespace Ferrobotics_Toolbar
         }
 
 
-        private void Connect()
+        private void Connect(bool ForceConnect = false)
         {
-            mCommunicationCtrl.InitConnection(mToolbarViewModel.IP, mToolbarViewModel.Port);
+            mCommunicationCtrl.InitConnection(mToolbarViewModel.IP, mToolbarViewModel.Port, ForceConnect);
 
             mToolbarViewModel.ConnectState = mCommunicationCtrl.ConnectState;
 
@@ -67,6 +73,7 @@ namespace Ferrobotics_Toolbar
             {
                 readDataTimer.Tick += new EventHandler(TimerFunction);
                 readDataTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+                mToolbarViewModel.SetDataModel.MergeStringData();
                 readDataTimer.Start();
             }
             else
@@ -78,12 +85,29 @@ namespace Ferrobotics_Toolbar
 
         public void TimerFunction(object? sender, EventArgs e)
         {
+            mToolbarViewModel.ConnectState = mCommunicationCtrl.ConnectState;
+
             if (mToolbarViewModel.ConnectState != "Normal") { return; }
 
             bool rtn_run = false;
-            mTMcraftToolbarAPI.RobotStatusProvider.ProjectRunOrNot(out rtn_run);
 
-            if (rtn_run == true) { return; }
+            if (mTMcraftToolbarAPI != null)
+            {
+                mTMcraftToolbarAPI.RobotStatusProvider.ProjectRunOrNot(out rtn_run);
+                if (rtn_run == true) 
+                {
+                    mToolbarViewModel.ConnectState = "Project running";
+                    panel_main.IsEnabled = false;
+                    return; 
+                }
+            }
+
+            if (panel_main.IsEnabled == false)
+            {
+                Connect(true);
+                panel_main.IsEnabled = true;
+                return;
+            }
 
             mCommunicationCtrl.WriteData(mToolbarViewModel.WriteData);
 
@@ -95,19 +119,6 @@ namespace Ferrobotics_Toolbar
                 mToolbarViewModel.GetParam3 = Convert.ToDecimal(data_read[3]);
                 mToolbarViewModel.GetParam4 = Convert.ToDecimal(data_read[4].Replace("k", ""));
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (mToolbarViewModel.ConnectState != "Normal") { return; }
-
-            string data_write = string.Format("ferbak1040 {0} {1} {2} {3} 0"
-                                             , mToolbarViewModel.SetParam1.ToString()
-                                             , mToolbarViewModel.SetParam2.ToString()
-                                             , mToolbarViewModel.SetParam3.ToString()
-                                             , mToolbarViewModel.SetParam4.ToString());
-
-            mToolbarViewModel.WriteData = data_write;
         }
     }
 
