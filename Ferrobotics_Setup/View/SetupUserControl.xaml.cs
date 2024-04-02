@@ -22,7 +22,6 @@ namespace Ferrobotics_Setup
     {
         private DigitalOutputSelectDialog mDo_Editor = null;
 
-
         private SetupModel mSetupModel = new SetupModel();
    
         
@@ -69,36 +68,24 @@ namespace Ferrobotics_Setup
         
         private void btn_apply_Click(object sender, RoutedEventArgs e)
         {
-            bool ans = false;
-
             if (mDo_Editor.SaveData == true)
             {
                 mSetupModel.UpdateDictData();
             }
 
-            if (mSetupModel.TMcraftSetupAPI == null) { return; }
 
-            SetupVariableProvider variable_provider = mSetupModel.TMcraftSetupAPI.VariableProvider;
-            SetupScriptWriteProvider script_write_provider = mSetupModel.TMcraftSetupAPI.ScriptWriteProvider;
-
-            List<string[]> value_list = new List<string[]>();
-            foreach (VariableModel var in mSetupModel.VarTable.Values)
+            if (false == mSetupModel.UpdateProjectVariableValue())
             {
-                if (false == variable_provider.IsProjectVariableExist(var.VarName))
-                {
-                    variable_provider.CreateProjectVariable(var.VarName, var.VarType, var.VarValue);
-                    value_list.Add(new string[] { var.VarName, var.VarValue });
-                    ans = true;
-                }
+                MessageBox.Show("Add and set project variable fail!");
+                return;
             }
-            if (ans == false) { return; }
 
-            variable_provider.ChangeProjectVariableValue(value_list);
-
-            script_write_provider.ClearBuffer();
-            script_write_provider.AppendScriptToBuffer("Display(\"Initialization Complete\")");
+            SetupScriptWriteProvider script_write_provider = mSetupModel.TMcraftSetupAPI.ScriptWriteProvider;
+            
+            script_write_provider?.ClearBuffer();
+            script_write_provider?.AppendScriptToBuffer("Display(\"Initialization Complete\")");
             Thread.Sleep(50);
-            script_write_provider.SaveBufferAsScript();
+            script_write_provider?.SaveBufferAsScript();
 
             MessageBox.Show("Set successfully!");
         }

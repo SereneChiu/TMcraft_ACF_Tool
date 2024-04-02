@@ -17,15 +17,6 @@ using CommunityToolkit.HighPerformance.Buffers;
 
 namespace VariableManager
 {
-    public interface ICommunicationCtrl
-    {
-        string ConnectState { get; }
-        void InitConnection(string IP, ushort Port);
-        string ReadData();
-        void WriteData(string Cmd);
-    }
-
-
     public class CommunicationCtrl : ICommunicationCtrl
     {
         private bool mIsConnectServer = false;

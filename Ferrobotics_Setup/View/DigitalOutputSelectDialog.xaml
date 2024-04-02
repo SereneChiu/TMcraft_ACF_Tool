@@ -27,7 +27,7 @@
                 </Grid.RowDefinitions>
                 <DockPanel Grid.Row="0" >
                     <Label Margin="10 0 0 0" Content="Digital output type:" Style="{DynamicResource LabelStyle}" Width="180" HorizontalAlignment="Left"/>
-                    <ComboBox Name="cb_do_type" Width="200" HorizontalAlignment="Left" SelectedIndex="0" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="20" SelectionChanged="ComboBox_SelectionChanged">
+                    <ComboBox Name="cb_do_type" Width="200" HorizontalAlignment="Left" VerticalContentAlignment="Center" FontFamily="Global Sans Serif" FontSize="20" SelectedIndex="0" SelectionChanged="ComboBox_SelectionChanged">
                         <ComboBoxItem Content="Control Box"></ComboBoxItem>
                         <ComboBoxItem Content="End Module"></ComboBoxItem>
                     </ComboBox>

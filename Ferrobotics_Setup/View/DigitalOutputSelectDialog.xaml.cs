@@ -96,30 +96,11 @@ namespace Ferrobotics_Setup
                 btn.Width = 90;
                 btn.Height = 30;
                 btn.Margin = new Thickness(10 + (btn.Width * y_offset), (10 + (btn.Height * x_offset)), 0, 0);
-                btn.Checked += Btn_Checked;
                 btn.Content = idx.ToString();
                 page_do.Children.Add(btn);
                 mChbList.Add(btn);
                 y_offset++;
             }
-
-        }
-
-        private void Btn_Checked(object sender, RoutedEventArgs e)
-        {
-            if (mSetupModel.TMcraftSetupAPI == null) { return; }
-
-            bool target_status = (btn_test_output.Content == "Test Output") ? true : false;
-            btn_test_output.Content = (target_status == true) ? "Stop Test" : "Test Output";
-
-            IO_TYPE cur_io_type = (mSetupModel.CurSelectDoType == 0) ? IO_TYPE.CONTROL_BOX : IO_TYPE.END_MODULE;
-            uint rtn_error = mSetupModel.TMcraftSetupAPI.IOProvider.WriteDigitOutput(cur_io_type
-                                                                                   , 0
-                                                                                   , mSetupModel.CurSelectDoIdx
-                                                                                   , target_status);
-
-            if (rtn_error != 0) { return; }
-            btn_test_output.Content = (target_status == true) ? "Stop Test" : "Test Output";
 
         }
 
@@ -156,6 +137,18 @@ namespace Ferrobotics_Setup
             ushort rtn_channel = 0;
             if (false == GetEnableDoChannel(ref rtn_channel)) { return; }
 
+            if (mSetupModel.TMcraftSetupAPI == null) { return; }
+
+            bool target_status = (btn_test_output.Content == "Test Output") ? true : false;
+
+            IO_TYPE cur_io_type = (mSetupModel.CurSelectDoType == 0) ? IO_TYPE.CONTROL_BOX : IO_TYPE.END_MODULE;
+            uint rtn_error = mSetupModel.TMcraftSetupAPI.IOProvider.WriteDigitOutput(cur_io_type
+                                                                                   , 0
+                                                                                   , mSetupModel.CurSelectDoIdx
+                                                                                   , target_status);
+
+            if (rtn_error != 0) { return; }
+            btn_test_output.Content = (target_status == true) ? "Stop Test" : "Test Output";
         }
 
         private void btn_clear_all_Click(object sender, RoutedEventArgs e)

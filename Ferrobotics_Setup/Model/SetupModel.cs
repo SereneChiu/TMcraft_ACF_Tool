@@ -13,36 +13,38 @@ namespace Ferrobotics_Setup.Model
 
     public class SetupModel : INotifyPropertyChanged
     {
-        public TMcraftSetupAPI TMcraftSetupAPI { get; set; } = null;
+        public TMcraftSetupAPI TMcraftSetupAPI 
+        { 
+            get
+            {
+                return mTMcraftSetupAPI;
+            }
+            set
+            {
+                mTMcraftSetupAPI = value;
+                mProjectVarCtrl.UpdateFunctionPtr(mTMcraftSetupAPI.VariableProvider.IsProjectVariableExist
+                                                 , mTMcraftSetupAPI.VariableProvider.CreateProjectVariable
+                                                 , mTMcraftSetupAPI.VariableProvider.ChangeProjectVariableValue);
+            }
+        }
         public ModelFunctionCb CallbackFunc { get; set; } = null;
 
         public ushort DO_CTRL_BOX = 16;
         public ushort DO_END_MODULE = 3;
 
+        private IProjectVariableCtrl mProjectVarCtrl = new ProjectVariableCtrl();
 
-        private static List<string> mVarNameList = new List<string>()
-        {
-            "ferrobotics_ip"
-          , "ferrobotics_port"
-          , "ferrobotics_do_type"
-          , "ferrobotics_do_channel"
-          , "ferrobotics_do_status"
-        };
-
-        private Dictionary<string, VariableModel> mVarDict = new Dictionary<string, VariableModel>();
-
-
+        private TMcraftSetupAPI mTMcraftSetupAPI = null;
         private ushort mDoCount = 0;
         private ushort mCurSelectDoIdx = 0;
         private ushort mCurSelectDoType = 0;
-        private string mIp = "\"192.168.99.1\"";
+        private string mIp = "192.168.99.1";
         private ushort mPort = 7070;
         private string mDevName = "ACF-K ER";
         private string mConnectState = "Unknown";
         private bool mDoStatus = false;
         private bool mEdit_Mode = false;
 
-        public Dictionary<string, VariableModel> VarTable { get { return mVarDict; } }
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
         public string DeviceName { get { return mDevName; } set { mDevName = value; NotifyPropertyChanged("DeviceName"); } }
@@ -103,17 +105,20 @@ namespace Ferrobotics_Setup.Model
 
         public void UpdateDictData()
         {
-            mVarDict.Clear();
-            mVarDict = new Dictionary<string, VariableModel>()
-            {
-                { mVarNameList[0], new VariableModel(mVarNameList[0], VariableType.String, Ip) }
-              , { mVarNameList[1], new VariableModel(mVarNameList[1], VariableType.Integer, Port.ToString()) }
-              , { mVarNameList[2], new VariableModel(mVarNameList[2], VariableType.Integer, CurSelectDoType.ToString()) }
-              , { mVarNameList[3], new VariableModel(mVarNameList[3], VariableType.Integer, CurSelectDoIdx.ToString()) }
-              , { mVarNameList[4], new VariableModel(mVarNameList[4], VariableType.Boolean, DoStatus.ToString()) }
-            };
+            //private string mIp = "\"192.168.99.1\"";
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(0).Key, string.Format("\"{0}\"", Ip));
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(1).Key, Port.ToString());
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(2).Key, CurSelectDoType.ToString());
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(3).Key, CurSelectDoIdx.ToString());
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
         }
 
+        public bool UpdateProjectVariableValue()
+        {
+            bool rtn_state = false;
+            mProjectVarCtrl.UpdateProjectVariableValue(ref rtn_state);
+            return rtn_state;
+        }
 
 
         public event PropertyChangedEventHandler PropertyChanged;

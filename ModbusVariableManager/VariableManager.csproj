@@ -13,6 +13,9 @@
       <HintPath>C:\Users\serene.chiu\.nuget\packages\communitytoolkit.highperformance\8.2.2\lib\net6.0\CommunityToolkit.HighPerformance.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="TMcraft">
+      <HintPath>..\..\..\TMcraft\TMcraft.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
