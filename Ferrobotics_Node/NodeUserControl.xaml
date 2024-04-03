@@ -15,17 +15,28 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Width="1000" Height="600">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="440"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="150"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
+            <RowDefinition Height="50"/> <!--0-->
+            <RowDefinition Height="30"/> <!--1-->
+            <RowDefinition Height="150"/><!--2-->
+            <RowDefinition Height="30"/> <!--3-->
+            <RowDefinition Height="30"/> <!--4-->
+            <RowDefinition Height="30"/> <!--5-->
+            <RowDefinition Height="30"/> <!--6-->
+            <RowDefinition Height="30"/> <!--7-->
+            <RowDefinition Height="30"/> <!--8-->
+            <RowDefinition Height="30"/> <!--9-->
+            <RowDefinition Height="30"/> <!--10-->
+            <RowDefinition Height="30"/> <!--11-->
+            <RowDefinition Height="30"/> <!--12-->
+            <RowDefinition Height="30"/> <!--13-->
+            <RowDefinition Height="30"/> <!--14-->
+            <RowDefinition Height="30"/> <!--15-->
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="4">
             <Image Source="/Ferrobotics_Node;component/Resources/Ferrobotics.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -33,12 +44,18 @@
         <Border Grid.Row="0" Padding="10 0 0 0">
             <Image Source="/Ferrobotics_Node;component/Resources/FerRobotics_RGB_vision.png" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Border>
-        <Label Grid.Row="1" Content="Set ACF Parameters:" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="1" Content="Set Operating Parameters:" Style="{DynamicResource LabelStyle}"/>
         <Frame Grid.Row="2" Grid.Column="0" x:Name="panel_ctrl"/>
-        
         <DockPanel Grid.Row="3">
-            <Label Content="Tool State:" Style="{DynamicResource LabelStyle}" />
-            <CheckBox Name="radio_tool_state" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="10 0 0 0" IsChecked="{Binding TargetDo}" Checked="radio_tool_state_Checked" />
+            <Label Content="Tool Status:" Style="{DynamicResource LabelStyle}" Width="120" />
+            <CheckBox Name="radio_tool_state" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="65 0 0 0" IsChecked="{Binding TargetDo}" Checked="radio_tool_state_Checked" />
         </DockPanel>
+        <Label Grid.Row="5" Grid.ColumnSpan="2" Content="{Binding TitleDesc}" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="6" Grid.ColumnSpan="2" Content="{Binding TargetDesc}" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="7" Grid.ColumnSpan="2" Content="{Binding ZeroDesc}" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="8" Grid.ColumnSpan="2" Content="{Binding RampDesc}" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="9" Grid.ColumnSpan="2" Content="{Binding PayloadDesc}" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="10" Grid.RowSpan="2" Grid.ColumnSpan="2" Content="{Binding SpeedDesc}" Style="{DynamicResource LabelStyle}"/>
+        <Label Grid.Row="12" Grid.RowSpan="4" Grid.ColumnSpan="2" Content="{Binding DetailDesc}" Style="{DynamicResource LabelStyle}"/>
     </Grid>
 </UserControl>
