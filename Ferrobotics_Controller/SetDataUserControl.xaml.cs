@@ -18,6 +18,11 @@ namespace Ferrobotics_Controller
     public partial class SetDataUserControl : UserControl
     {
         private SetDataModel mSetDataModel = null;
+        public void UpdateEditMode()
+        {
+            mSetDataModel.Edit_Mode = !mSetDataModel.Edit_Mode;
+        }
+
         public SetDataUserControl(SetDataModel DataModel)
         {
             InitializeComponent();
@@ -25,6 +30,7 @@ namespace Ferrobotics_Controller
             mSetDataModel = DataModel;
             DataContext = mSetDataModel;
         }
+
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {

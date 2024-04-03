@@ -9,6 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Ferrobotics.png" />
+    <None Remove="Resources\FerRobotics_RGB_vision.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Ferrobotics_Controller\Ferrobotics_Controller.csproj">
       <Private>True</Private>
     </ProjectReference>
@@ -19,6 +24,27 @@
       <HintPath>..\..\..\TMcraft\TMcraft.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Ferrobotics.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\FerRobotics_RGB_vision.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="ViewStyle\BorderStyle.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Update="ViewStyle\ChackBoxStyle.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+    <Page Update="ViewStyle\LabelStyle.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
   </ItemGroup>
 
 </Project>

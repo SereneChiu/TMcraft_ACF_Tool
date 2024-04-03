@@ -5,20 +5,40 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ferrobotics_Node"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/LabelStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/BorderStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/ChackBoxStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="440"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="150"/>
-            <RowDefinition/>
+            <RowDefinition Height="30"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="440"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Frame Grid.Column="0" x:Name="panel_ctrl"/>
-        </Grid>
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="4">
+            <Image Source="/Ferrobotics_Node;component/Resources/Ferrobotics.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+        </Border>
+        <Border Grid.Row="0" Padding="10 0 0 0">
+            <Image Source="/Ferrobotics_Node;component/Resources/FerRobotics_RGB_vision.png" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        </Border>
+        <Label Grid.Row="1" Content="Set ACF Parameters:" Style="{DynamicResource LabelStyle}"/>
+        <Frame Grid.Row="2" Grid.Column="0" x:Name="panel_ctrl"/>
+        
+        <DockPanel Grid.Row="3">
+            <Label Content="Tool State:" Style="{DynamicResource LabelStyle}" />
+            <CheckBox Name="radio_tool_state" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="10 0 0 0" IsChecked="{Binding TargetDo}" Checked="radio_tool_state_Checked" />
+        </DockPanel>
     </Grid>
 </UserControl>

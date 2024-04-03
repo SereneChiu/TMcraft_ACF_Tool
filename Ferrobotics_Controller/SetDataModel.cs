@@ -15,14 +15,14 @@ namespace Ferrobotics_Controller
         private decimal mSetParam3 = 0;
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
-        public bool Edit_Mode { get; set; } = false;
-
+        private bool mTargetDo = false;
+        public bool Edit_Mode { get { return mEdit_Mode; } set { mEdit_Mode = value; NotifyPropertyChanged("Edit_Mode"); } } 
         public decimal SetParam1 { get { return mSetParam1; } set { mSetParam1 = value; NotifyPropertyChanged("SetParam1"); } }
         public decimal SetParam2 { get { return mSetParam2; } set { mSetParam2 = value; NotifyPropertyChanged("SetParam2"); } }
         public decimal SetParam3 { get { return mSetParam3; } set { mSetParam3 = value; NotifyPropertyChanged("SetParam3"); } }
         public decimal SetParam4 { get { return mSetParam4; } set { mSetParam4 = value; NotifyPropertyChanged("SetParam4"); } }
         public string WriteData { get { return mWriteData; } set { mWriteData = value; NotifyPropertyChanged("WriteData"); } }
-
+        public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
 
         public void MergeStringData()
         {
