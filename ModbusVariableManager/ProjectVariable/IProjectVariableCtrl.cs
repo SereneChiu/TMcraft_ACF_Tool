@@ -13,8 +13,11 @@ namespace VariableManager
 
         void UpdateFunctionPtr(IsProjectVariableExistFunc IsProjectVariableExist
                              , CreateProjectVariableFunc CreateProjectVariable
-                             , ChangeProjectVariableValueFunc ChangeProjectVariableValue);
+                             , ChangeProjectVariableValueFunc ChangeProjectVariableValue
+                             , GetProjectVariableListFunc GetProjectVariableList);
 
         void UpdateProjectVariableValue(ref bool RtnState);
+
+        string GetProjectVariableValue(string VarName);
     }
 }

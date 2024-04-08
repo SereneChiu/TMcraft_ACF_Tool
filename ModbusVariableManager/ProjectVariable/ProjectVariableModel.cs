@@ -37,7 +37,7 @@ namespace VariableManager
             {
                 { mVarNameList[0], new VariableData(mVarNameList[0], VariableType.String, "") }
               , { mVarNameList[1], new VariableData(mVarNameList[1], VariableType.Integer, "") }
-              , { mVarNameList[2], new VariableData(mVarNameList[2], VariableType.Integer, "") }
+              , { mVarNameList[2], new VariableData(mVarNameList[2], VariableType.String, "") }
               , { mVarNameList[3], new VariableData(mVarNameList[3], VariableType.Integer, "") }
               , { mVarNameList[4], new VariableData(mVarNameList[4], VariableType.Boolean, "") }
             };

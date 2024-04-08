@@ -27,6 +27,7 @@ namespace Ferrobotics_Node
             InitializeComponent();
 
             DataContext = mNodeViewModel.SetDataModel;
+            mNodeViewModel.SetDataModel.BtnWriteVisible = Visibility.Hidden;
             mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
             panel_ctrl.Content = mSetDataUserControl;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
@@ -45,7 +46,44 @@ namespace Ferrobotics_Node
         public void InitializeNode(TMcraftNodeAPI NodeAPI)
         {
             mTMcraftNodeAPI = NodeAPI;
+            GetDataFromNode();
+        }
 
+        public void InscribeScript(ScriptWriteProvider WriteProvider)
+        {
+            List<string> script_list = new List<string>();
+
+            mNodeViewModel.SetDataModel.MergeStringData();
+
+            string cmd = string.Format("GetBytes(\"{0}\")"
+                                      , mNodeViewModel.SetDataModel.WriteData);
+
+            string target_do = (mNodeViewModel.SetDataModel.TargetDo == true) ? "1" : "0";
+            //IO["ControlBox"].DO[0] = 0
+            //IO["EndModule"].DO[0] = 0
+
+            script_list.Add("Socket ferrobotics = var_ferrobotics_ip, var_ferrobotics_port");
+            script_list.Add("socket_open(\"ferrobotics\")");
+            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
+            script_list.Add("Sleep(5)");
+            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
+            script_list.Add("Sleep(5)");
+            script_list.Add(string.Format("IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel] = {0}"
+                                        , target_do));
+
+            foreach (string script in script_list) { WriteProvider?.AppendLine(script); }
+
+            Dictionary<string, string> save_data = new Dictionary<string, string>();
+            save_data.Add("f_target", mNodeViewModel.SetDataModel.SetParam1.ToString());
+            save_data.Add("f_zero", mNodeViewModel.SetDataModel.SetParam2.ToString());
+            save_data.Add("f_ramp", mNodeViewModel.SetDataModel.SetParam3.ToString());
+            save_data.Add("f_payload", mNodeViewModel.SetDataModel.SetParam4.ToString());
+            save_data.Add("f_do", mNodeViewModel.SetDataModel.TargetDo.ToString());
+            mTMcraftNodeAPI?.DataStorageProvider.SaveData(save_data);
+        }
+
+        private void GetDataFromNode()
+        {
             if (mTMcraftNodeAPI == null) { return; }
 
             string f_target_str = "";
@@ -84,38 +122,20 @@ namespace Ferrobotics_Node
             mNodeViewModel.SetDataModel.TargetDo = Convert.ToBoolean(f_do);
         }
 
-        public void InscribeScript(ScriptWriteProvider WriteProvider)
-        {
-            List<string> script_list = new List<string>();
-
-            mNodeViewModel.SetDataModel.MergeStringData();
-
-            string cmd = string.Format("GetBytes(\"{0}\")"
-                                      , mNodeViewModel.SetDataModel.WriteData);
-
-
-            script_list.Add("Socket ferrobotics = var_ferrobotics_ip, var_ferrobotics_port");
-            script_list.Add("socket_open(\"ferrobotics\")");
-            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
-            script_list.Add("Sleep(5)");
-            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
-            script_list.Add("Sleep(5)");
-            foreach (string script in script_list) { WriteProvider?.AppendLine(script); }
-
-            Dictionary<string, string> save_data = new Dictionary<string, string>();
-            save_data.Add("f_target", mNodeViewModel.SetDataModel.SetParam1.ToString());
-            save_data.Add("f_zero", mNodeViewModel.SetDataModel.SetParam2.ToString());
-            save_data.Add("f_ramp", mNodeViewModel.SetDataModel.SetParam3.ToString());
-            save_data.Add("f_payload", mNodeViewModel.SetDataModel.SetParam4.ToString());
-            save_data.Add("f_do", mNodeViewModel.SetDataModel.TargetDo.ToString());
-            mTMcraftNodeAPI?.DataStorageProvider.SaveData(save_data);
-            mTMcraftNodeAPI?.Close();
-        }
-
         private void radio_tool_state_Checked(object sender, RoutedEventArgs e)
         {
             radio_tool_state.Tag = (radio_tool_state.IsChecked == true) ? "ON" : "OFF";
+        }
 
+        private void btn_ok_Click(object sender, RoutedEventArgs e)
+        {
+            mTMcraftNodeAPI?.Close();
+        }
+
+        private void btn_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            GetDataFromNode();
+            mTMcraftNodeAPI?.Close();
         }
     }
 

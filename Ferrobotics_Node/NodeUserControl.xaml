@@ -15,7 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Width="1000" Height="600">
+    <Grid Width="1000" Height="600" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="440"/>
             <ColumnDefinition/>
@@ -49,6 +49,10 @@
         <DockPanel Grid.Row="3">
             <Label Content="Tool Status:" Style="{DynamicResource LabelStyle}" Width="120" />
             <CheckBox Name="radio_tool_state" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="65 0 0 0" IsChecked="{Binding TargetDo}" Checked="radio_tool_state_Checked" />
+        </DockPanel>
+        <DockPanel Grid.Row="4">
+            <Button Name="btn_ok" Content="OK" Width="120" Margin="185 2 0 2" Click="btn_ok_Click"/>
+            <Button Name="btn_cancel" Content="Cancel" Width="120" Margin="0 2 0 2" Click="btn_cancel_Click"/>
         </DockPanel>
         <Label Grid.Row="5" Grid.ColumnSpan="2" Content="{Binding TitleDesc}" Style="{DynamicResource LabelStyle}"/>
         <Label Grid.Row="6" Grid.ColumnSpan="2" Content="{Binding TargetDesc}" Style="{DynamicResource LabelStyle}"/>

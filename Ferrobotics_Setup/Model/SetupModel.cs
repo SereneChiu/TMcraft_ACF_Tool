@@ -24,7 +24,8 @@ namespace Ferrobotics_Setup.Model
                 mTMcraftSetupAPI = value;
                 mProjectVarCtrl.UpdateFunctionPtr(mTMcraftSetupAPI.VariableProvider.IsProjectVariableExist
                                                  , mTMcraftSetupAPI.VariableProvider.CreateProjectVariable
-                                                 , mTMcraftSetupAPI.VariableProvider.ChangeProjectVariableValue);
+                                                 , mTMcraftSetupAPI.VariableProvider.ChangeProjectVariableValue
+                                                 , mTMcraftSetupAPI.VariableProvider.GetProjectVariableList);
             }
         }
         public ModelFunctionCb CallbackFunc { get; set; } = null;
@@ -106,9 +107,15 @@ namespace Ferrobotics_Setup.Model
         public void UpdateDictData()
         {
             //private string mIp = "\"192.168.99.1\"";
+
+            //IO["ControlBox"].DO[0] = 0
+            //IO["EndModule"].DO[0] = 0
+
+            string do_source = (CurSelectDoType == 0) ? "ControlBox" : "EndModule";
+
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(0).Key, string.Format("\"{0}\"", Ip));
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(1).Key, Port.ToString());
-            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(2).Key, CurSelectDoType.ToString());
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(2).Key, string.Format("\"{0}\"", do_source));
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(3).Key, CurSelectDoIdx.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
         }
@@ -119,7 +126,6 @@ namespace Ferrobotics_Setup.Model
             mProjectVarCtrl.UpdateProjectVariableValue(ref rtn_state);
             return rtn_state;
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Ferrobotics_Controller
 {
@@ -16,6 +17,8 @@ namespace Ferrobotics_Controller
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
         private bool mTargetDo = false;
+        private Visibility mBtnWriteVisible = Visibility.Visible;
+
         private string mTitleDesc = "Operation Parameters Information:";
         private string mTargetDesc  = "f__target:  A positive target force means the ACF will be pushing, while a negative target force means pulling.";
         private string mZeroDesc    = "f__zero:   This value is necessary for the Force ramp, for details see the chapter Force ramp functionality.";
@@ -41,7 +44,7 @@ namespace Ferrobotics_Controller
         public string PayloadDesc { get { return mPayloadDesc; } set { mPayloadDesc = value; NotifyPropertyChanged("PayloadDesc"); } }
         public string SpeedDesc { get { return mSpeedDesc; } set { mSpeedDesc = value; NotifyPropertyChanged("SpeedDesc"); } }
         public string DetailDesc { get { return mDetailDesc; } set { mDetailDesc = value; NotifyPropertyChanged("DetailDesc"); } }
-
+        public Visibility BtnWriteVisible { get { return mBtnWriteVisible; } set { mBtnWriteVisible = value; NotifyPropertyChanged("BtnWriteVisible"); } }
 
         public void MergeStringData()
         {

@@ -30,7 +30,7 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
-        <Button Grid.Row="0" Grid.Column="1" Content="Write Data" Click="Button_Click" Style="{DynamicResource StandardButton}"/>
+        <Button Grid.Row="0" Grid.Column="1" Visibility="{Binding BtnWriteVisible}" Content="Write Data" Click="Button_Click" Style="{DynamicResource StandardButton}"/>
 
         <TextBox Grid.Row="1" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
         <TextBox Grid.Row="2" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
