@@ -118,11 +118,36 @@ namespace Ferrobotics_Setup.Model
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
         }
 
-        public bool UpdateProjectVariableValue()
+        public bool UpdateProjectVariableValueFromData()
         {
             bool rtn_state = false;
-            mProjectVarCtrl.UpdateProjectVariableValue(ref rtn_state);
+            mProjectVarCtrl.UpdateProjectVariableFromData(ref rtn_state);
             return rtn_state;
+        }
+
+        public bool GetProjectVariable()
+        {
+            bool rtn_result = false;
+            rtn_result = mProjectVarCtrl.UpdateDataFromProjectVariable();
+            if (rtn_result == false) { return rtn_result; }
+
+            ushort out_port = 0;
+
+            this.Ip = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_ip"].VarValue;
+            if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_port"].VarValue, out out_port))
+            {
+                this.Port = out_port;
+            }
+
+            ushort out_do_index = 0;
+            if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_channel"].VarValue, out out_do_index))
+            {
+                this.CurSelectDoIdx = out_do_index;
+            }
+
+            this.CurSelectDoType = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_type"].VarValue == "0") ? (ushort)0 : (ushort)1;
+
+            return rtn_result;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

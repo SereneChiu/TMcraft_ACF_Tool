@@ -16,8 +16,8 @@ namespace VariableManager
                              , ChangeProjectVariableValueFunc ChangeProjectVariableValue
                              , GetProjectVariableListFunc GetProjectVariableList);
 
-        void UpdateProjectVariableValue(ref bool RtnState);
-
-        string GetProjectVariableValue(string VarName);
+        void UpdateProjectVariableFromData(ref bool RtnState);
+        bool CheckVariableExist(string VariableName);
+        bool UpdateDataFromProjectVariable();
     }
 }

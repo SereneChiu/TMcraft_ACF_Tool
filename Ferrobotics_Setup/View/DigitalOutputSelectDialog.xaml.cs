@@ -49,6 +49,15 @@ namespace Ferrobotics_Setup
             }
         }
 
+        public void UpdateView()
+        {
+            cb_do_type.SelectedIndex = mSetupModel.CurSelectDoType;
+
+            if ((mSetupModel.CurSelectDoIdx >= mChbList.Count) || (mChbList.Count == 0)) { return; }
+
+            mChbList[mSetupModel.CurSelectDoIdx].IsChecked = true;
+        }
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             mSetupModel.CurSelectDoType = (ushort)cb_do_type.SelectedIndex;
@@ -63,6 +72,7 @@ namespace Ferrobotics_Setup
                 return;
             }
 
+            cb_do_type.SelectedIndex = 0;
             mSetupModel.DoCount = mSetupModel.DO_CTRL_BOX;
         }
         

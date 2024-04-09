@@ -27,9 +27,13 @@ namespace Ferrobotics_Node
         public NodeUserControl()
         {
             InitializeComponent();
+        }
 
-            DataContext = mNodeViewModel.SetDataModel;
+
+        private void InitView()
+        {
             mNodeViewModel.SetDataModel.BtnWriteVisible = Visibility.Hidden;
+            DataContext = mNodeViewModel.SetDataModel;
             mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
             panel_ctrl.Content = mSetDataUserControl;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
@@ -47,12 +51,13 @@ namespace Ferrobotics_Node
         public void InitializeNode(TMcraftNodeAPI NodeAPI)
         {
             mTMcraftNodeAPI = NodeAPI;
-            GetDataFromNode();
 
             mProjectVariableCtrl.UpdateFunctionPtr(mTMcraftNodeAPI.VariableProvider.IsProjectVariableExist
                                                  , mTMcraftNodeAPI.VariableProvider.CreateProjectVariable
                                                  , mTMcraftNodeAPI.VariableProvider.ChangeProjectVariableValue
                                                  , mTMcraftNodeAPI.VariableProvider.GetProjectVariableList);
+            GetDataFromNode();
+            InitView();
 
         }
 
@@ -70,17 +75,28 @@ namespace Ferrobotics_Node
             save_data_table.Add("t_ramp", mNodeViewModel.SetDataModel.SetParam3.ToString());
             save_data_table.Add("f_payload", mNodeViewModel.SetDataModel.SetParam4.ToString());
             save_data_table.Add("f_do", mNodeViewModel.SetDataModel.TargetDo.ToString());
+            save_data_table.Add("display", mNodeViewModel.SetDataModel.Display.ToString());
             mTMcraftNodeAPI?.DataStorageProvider.SaveData(save_data_table);
+
+            if (mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_type") == false
+                || mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_channel") == false)
+            {
+                MessageBox.Show("Please set do channel in Start Node first!");
+                return;
+            }
 
             foreach(string str in save_data_table.Keys)
             {
                 mProjectVariableCtrl.VariableModel.AddProjectVariable(str, save_data_table[str]);
             }
-            mProjectVariableCtrl.UpdateProjectVariableValue(ref rtn_result);
+
+            mProjectVariableCtrl.UpdateProjectVariableFromData(ref rtn_result);
 
             if (mNodeViewModel.SetDataModel.Display == true)
             {
+                //string script_cmd = string.Format("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = \"+IO[\"{0}\"].DO[{1}])", );
                 script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = \"+IO[\"EndModule\"].DO[2])");
+                //script_list.Add(script_cmd);
             }
 
             string cmd = string.Format("GetBytes(\"{0}\")"
@@ -110,26 +126,29 @@ namespace Ferrobotics_Node
             string f_payload_str = "";
             string f_do_str = "";
             string node_name_str = "";
+            string display_str = "";
 
             decimal f_target = 0;
             decimal f_zero = 0;
             decimal t_ramp = 0;
             decimal f_payload = 0;
             bool f_do = false;
+            bool display = false;
 
             mTMcraftNodeAPI.DataStorageProvider.GetData("node_name", out node_name_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_target", out f_target_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_zero", out f_zero_str);
-            mTMcraftNodeAPI.DataStorageProvider.GetData("f_ramp", out t_ramp_str);
+            mTMcraftNodeAPI.DataStorageProvider.GetData("t_ramp", out t_ramp_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_payload", out f_payload_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_do", out f_do_str);
+            mTMcraftNodeAPI.DataStorageProvider.GetData("display", out display_str);
 
             if ((false == decimal.TryParse(f_target_str, out f_target))
-                || (false == decimal.TryParse(f_zero_str, out f_zero))
-                || (false == decimal.TryParse(t_ramp_str, out t_ramp))
-                || (false == decimal.TryParse(f_payload_str, out f_payload))
-                || (false == bool.TryParse(f_do_str, out f_do))
-
+             || (false == decimal.TryParse(f_zero_str, out f_zero))
+             || (false == decimal.TryParse(t_ramp_str, out t_ramp))
+             || (false == decimal.TryParse(f_payload_str, out f_payload))
+             || (false == bool.TryParse(f_do_str, out f_do))
+             || (false == bool.TryParse(display_str, out display))
                 )
             {
                 return;
@@ -139,8 +158,9 @@ namespace Ferrobotics_Node
             mNodeViewModel.SetDataModel.SetParam2 = Convert.ToDecimal(f_zero);
             mNodeViewModel.SetDataModel.SetParam3 = Convert.ToDecimal(t_ramp);
             mNodeViewModel.SetDataModel.SetParam4 = Convert.ToDecimal(f_payload);
-            mNodeViewModel.SetDataModel.TargetDo = Convert.ToBoolean(f_do);
+            mNodeViewModel.SetDataModel.TargetDo = f_do;
             mNodeViewModel.SetDataModel.NodeName = node_name_str;
+            mNodeViewModel.SetDataModel.Display = display;
         }
 
         private void radio_tool_state_Checked(object sender, RoutedEventArgs e)

@@ -27,11 +27,17 @@ namespace Ferrobotics_Setup
         
         public SetupUserControl()
         {
-            DataContext = mSetupModel;
             InitializeComponent();
-            mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
+        }
+
+        private void InitView()
+        {
+            DataContext = mSetupModel;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
 
+            mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
+            if (false == mSetupModel.GetProjectVariable()) { return; }
+            mDo_Editor?.UpdateView();
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
@@ -46,9 +52,10 @@ namespace Ferrobotics_Setup
         public void InitializeSetup(TMcraftSetupAPI TMcraftSetupAPI)
         {
             mSetupModel.TMcraftSetupAPI = TMcraftSetupAPI;
+            InitView();
         }
 
-       
+
 
         private void btn_browse_Click(object sender, RoutedEventArgs e)
         {
@@ -69,7 +76,7 @@ namespace Ferrobotics_Setup
         {
             mSetupModel.UpdateDictData(mDo_Editor.SaveData);
 
-            if (false == mSetupModel.UpdateProjectVariableValue())
+            if (false == mSetupModel.UpdateProjectVariableValueFromData())
             {
                 MessageBox.Show("Add and set project variable fail!");
                 return;
@@ -83,6 +90,7 @@ namespace Ferrobotics_Setup
             script_write_provider?.SaveBufferAsScript();
 
             MessageBox.Show("Set successfully!");
+            mSetupModel.TMcraftSetupAPI.Close();
         }
 
         private void btn_connect_Click(object sender, RoutedEventArgs e)

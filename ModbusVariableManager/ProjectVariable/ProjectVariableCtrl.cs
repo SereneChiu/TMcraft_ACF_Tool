@@ -44,27 +44,53 @@ namespace VariableManager
             return true;
         }
 
-
-        public string GetProjectVariableValue(string VarName)
+        public bool CheckVariableExist(string VariableName)
         {
-            if (CheckFunctionExist() == false) { return null; }
-            List<VariableInfo> rtn_var_list = new List<VariableInfo>();
+            if (CheckFunctionExist() == false) { return false; }
 
-            if (GetProjectVariableList(ref rtn_var_list) != 0)
-            {
-                return null;
-            }
+            List<VariableInfo> var_list = new List<VariableInfo>();
 
-            VariableInfo var_info = rtn_var_list.First(p => p.Name == VarName);
-            if (var_info == null)
-            {
-                return null;
-            }
-
-            return var_info.value;
+            if (GetProjectVarList(ref var_list) == false) { return false; }
+            if (null == var_list.First(p => p.Name == VariableName)) { return false; }
+            return true;
         }
 
-        public void UpdateProjectVariableValue(ref bool RtnState)
+        private bool GetProjectVarList(ref List<VariableInfo> RtnVarList)
+        {
+            RtnVarList = new List<VariableInfo>();
+            if (GetProjectVariableList(ref RtnVarList) != 0)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool UpdateDataFromProjectVariable()
+        {
+            if (CheckFunctionExist() == false) { return false; }
+
+            List<VariableInfo> rtn_var_list = new List<VariableInfo>();
+            if (false == GetProjectVarList(ref rtn_var_list))
+            {
+                return false;
+            }
+
+            if (rtn_var_list.Count == 0) { return false; }
+
+            foreach (string key_str in VariableModel.VarTable.Keys)
+            {
+                VariableInfo var_info = rtn_var_list.First(p => p.Name == "var_" + key_str);
+                if (var_info == null)
+                {
+                    return false;
+                }
+
+                VariableModel.VarTable[key_str].VarValue = var_info.value;
+            }
+            return true;
+        }
+
+        public void UpdateProjectVariableFromData(ref bool RtnState)
         {
             if (CheckFunctionExist() == false) { RtnState = false; }
 
