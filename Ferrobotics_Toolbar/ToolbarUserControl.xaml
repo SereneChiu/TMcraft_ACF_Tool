@@ -77,25 +77,7 @@
                     <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Connect Status:"/>
                     <Label Grid.Row="0" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding ConnectState, UpdateSourceTrigger=PropertyChanged}" />
                     <Button Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" Name="btn_connect" Click="btn_connect_Click"  Style="{DynamicResource BtnStyle_Connect}" />
-
                     <Frame Name="page_control" Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="3"/>
-                    <!--<Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
-                    <Button Grid.Row="1" Grid.Column="1" Content="Write Data" Click="Button_Click" Style="{DynamicResource StandardButton}"/>
-                    <TextBox Grid.Row="2" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
-                    <TextBox Grid.Row="3" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
-                    <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_ramp:" />
-                    <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_payload/RPM:" />
-
-                    <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-                    <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-                    <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam3, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-                    <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-
-                    <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
-                    <TextBox Grid.Row="3" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
-                    <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s" />
-                    <TextBox Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="kg" />-->
-
                     <Border Grid.Row="6" Grid.ColumnSpan="4" >
                         <Image Source="/Ferrobotics_Toolbar;component/Resources/line.png" Stretch="Fill" Margin="10 0 20 0"  />
                     </Border>

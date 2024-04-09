@@ -75,9 +75,9 @@ namespace VariableManager
                 if (false == this.IsProjectVariableExist(var.VarName))
                 {
                     this.CreateProjectVariable(var.VarName, var.VarType, var.VarValue);
-                    value_list.Add(new string[] { var.VarName, var.VarValue });
-                    RtnState = true;
                 }
+                value_list.Add(new string[] { "var_" + var.VarName, var.VarValue });
+                RtnState = true;
             }
             if (RtnState == false) { return; }
 

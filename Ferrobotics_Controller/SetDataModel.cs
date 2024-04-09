@@ -16,7 +16,9 @@ namespace Ferrobotics_Controller
         private decimal mSetParam3 = 0;
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
+        private string mNodeName = "ACF Control";
         private bool mTargetDo = false;
+        private bool mDisplay = false;
         private Visibility mBtnWriteVisible = Visibility.Visible;
 
         private string mTitleDesc = "Operation Parameters Information:";
@@ -35,8 +37,11 @@ namespace Ferrobotics_Controller
         public decimal SetParam3 { get { return mSetParam3; } set { mSetParam3 = value; NotifyPropertyChanged("SetParam3"); } }
         public decimal SetParam4 { get { return mSetParam4; } set { mSetParam4 = value; NotifyPropertyChanged("SetParam4"); } }
         public string WriteData { get { return mWriteData; } set { mWriteData = value; NotifyPropertyChanged("WriteData"); } }
+        public string NodeName { get { return mNodeName; } set { mNodeName = value; NotifyPropertyChanged("NodeName"); } }
+
         public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
-      
+        public bool Display { get { return mDisplay; } set { mDisplay = value; NotifyPropertyChanged("Display"); } }
+
         public string TitleDesc { get { return mTitleDesc; } set { mTitleDesc = value; NotifyPropertyChanged("TitleDesc"); } }
         public string TargetDesc { get { return mTargetDesc; } set { mTargetDesc = value; NotifyPropertyChanged("TargetDesc"); } }
         public string ZeroDesc { get { return mZeroDesc; } set { mZeroDesc = value; NotifyPropertyChanged("ZeroDesc"); } }

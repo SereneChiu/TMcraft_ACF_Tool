@@ -104,18 +104,16 @@ namespace Ferrobotics_Setup.Model
             } 
         }
 
-        public void UpdateDictData()
+        public void UpdateDictData(bool UpdateDo)
         {
-            //private string mIp = "\"192.168.99.1\"";
-
-            //IO["ControlBox"].DO[0] = 0
-            //IO["EndModule"].DO[0] = 0
-
-            string do_source = (CurSelectDoType == 0) ? "ControlBox" : "EndModule";
+            if (UpdateDo == true)
+            {
+                string do_source = (CurSelectDoType == 0) ? "ControlBox" : "EndModule";
+                mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(2).Key, string.Format("\"{0}\"", do_source));
+            }
 
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(0).Key, string.Format("\"{0}\"", Ip));
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(1).Key, Port.ToString());
-            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(2).Key, string.Format("\"{0}\"", do_source));
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(3).Key, CurSelectDoIdx.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
         }

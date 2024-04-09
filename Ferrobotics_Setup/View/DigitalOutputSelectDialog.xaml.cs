@@ -107,8 +107,10 @@ namespace Ferrobotics_Setup
         private void btn_ok_Click(object sender, RoutedEventArgs e)
         {
             ushort rtn_channel = 0;
-            if (false == GetEnableDoChannel(ref rtn_channel)) { return; }
-            mSetupModel.CurSelectDoIdx = rtn_channel;
+            if (true == GetEnableDoChannel(ref rtn_channel)) 
+            {
+                mSetupModel.CurSelectDoIdx = rtn_channel;
+            }
 
             if (false == (this.Parent is Window)) { return; }
             SaveData = true;

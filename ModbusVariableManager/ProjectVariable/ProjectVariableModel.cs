@@ -13,7 +13,7 @@ namespace VariableManager
         public Dictionary<string, VariableData> VarTable { get { return mVarDict; } }
 
 
-        public static List<string> mVarNameList = new List<string>()
+        private static List<string> mVarNameList = new List<string>()
         {
             "ferrobotics_ip"
           , "ferrobotics_port"
@@ -41,6 +41,12 @@ namespace VariableManager
               , { mVarNameList[3], new VariableData(mVarNameList[3], VariableType.Integer, "") }
               , { mVarNameList[4], new VariableData(mVarNameList[4], VariableType.Boolean, "") }
             };
+        }
+
+        public void AddProjectVariable(string VarName, string VarValue, VariableType VarType = VariableType.String)
+        {
+            if (mVarDict.ContainsKey(VarName) == true) { return; }
+            mVarDict.Add(VarName, new VariableData(VarName, VarType, string.Format("\"{0}\"", VarValue)));
         }
 
         public void UpdateDictData(string Key, string Value)

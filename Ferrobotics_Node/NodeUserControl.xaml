@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/LabelStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/BorderStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/ChackBoxStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Node;component/ViewStyle/TextBoxStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -44,7 +45,12 @@
         <Border Grid.Row="0" Padding="10 0 0 0">
             <Image Source="/Ferrobotics_Node;component/Resources/FerRobotics_RGB_vision.png" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Center"/>
         </Border>
-        <Label Grid.Row="1" Content="Set Operating Parameters:" Style="{DynamicResource LabelStyle}"/>
+        <DockPanel Grid.Row="1">
+            <Label Content="Name:" Style="{DynamicResource LabelStyle}"/>
+            <TextBox Width="250" Text="{Binding NodeName, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyleForWrite}"/>
+            <Label Content="Display:" Style="{DynamicResource LabelStyle}"/>
+            <CheckBox Name="radio_display" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="0 0 0 0" IsChecked="{Binding Display}" Checked="radio_tool_state_Checked" />
+        </DockPanel>
         <Frame Grid.Row="2" Grid.Column="0" x:Name="panel_ctrl"/>
         <DockPanel Grid.Row="3">
             <Label Content="Tool Status:" Style="{DynamicResource LabelStyle}" Width="120" />

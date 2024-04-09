@@ -29,7 +29,6 @@ namespace Ferrobotics_Setup
         {
             DataContext = mSetupModel;
             InitializeComponent();
-            mSetupModel.UpdateDictData();
             mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
 
@@ -68,11 +67,7 @@ namespace Ferrobotics_Setup
         
         private void btn_apply_Click(object sender, RoutedEventArgs e)
         {
-            if (mDo_Editor.SaveData == true)
-            {
-                mSetupModel.UpdateDictData();
-            }
-
+            mSetupModel.UpdateDictData(mDo_Editor.SaveData);
 
             if (false == mSetupModel.UpdateProjectVariableValue())
             {
