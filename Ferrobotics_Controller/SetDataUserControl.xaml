@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/LabelStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="/Ferrobotics_Controller;component/ViewStyle/TextBlockStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>

@@ -31,7 +31,7 @@
                 <Button Name="btn_node" Content="Node" Grid.Column="5" Width="60" Click="btn_node_Click" />
             </Grid>
         </DockPanel>
-        <Label Content="Send:" Grid.Row="1"/>
+        <Label Content="Send:" Grid.Row="1" Background="{x:Null}" IsEnabled="False"/>
         <TextBox Grid.Row="1" x:Name="tb_send" Height="30"></TextBox>
         <Label Content="Recv:" Grid.Row="2"/>
         <TextBox Grid.Row="2" x:Name="tb_recv" Height="30"></TextBox>
@@ -70,5 +70,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-      </Grid>
+    </Grid>
 </UserControl>

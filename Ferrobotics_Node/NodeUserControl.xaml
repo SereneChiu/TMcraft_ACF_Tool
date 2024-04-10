@@ -49,7 +49,7 @@
             <Label Content="Name:" Style="{DynamicResource LabelStyle}"/>
             <TextBox Width="250" Text="{Binding NodeName, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource TextBoxStyleForWrite}"/>
             <Label Content="Display:" Style="{DynamicResource LabelStyle}"/>
-            <CheckBox Name="radio_display" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="0 0 0 0" IsChecked="{Binding Display}" Checked="radio_tool_state_Checked" />
+            <CheckBox Name="radio_display" Content="OFF" Style="{DynamicResource chkBullet}" HorizontalAlignment="Left" Margin="0 0 0 0" IsChecked="{Binding Display}" Checked="radio_display_Checked" />
         </DockPanel>
         <Frame Grid.Row="2" Grid.Column="0" x:Name="panel_ctrl"/>
         <DockPanel Grid.Row="3">

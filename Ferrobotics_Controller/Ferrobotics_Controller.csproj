@@ -12,4 +12,10 @@
     <ProjectReference Include="..\ModbusVariableManager\VariableManager.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Page Update="ViewStyle\TextBlockStyle.xaml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Page>
+  </ItemGroup>
+
 </Project>
