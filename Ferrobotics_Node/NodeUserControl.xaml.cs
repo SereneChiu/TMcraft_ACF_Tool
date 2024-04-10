@@ -58,7 +58,7 @@ namespace Ferrobotics_Node
                                                  , mTMcraftNodeAPI.VariableProvider.GetProjectVariableList);
             GetDataFromNode();
             InitView();
-
+            mProjectVariableCtrl.UpdateDataFromProjectVariable();
         }
 
         public void InscribeScript(ScriptWriteProvider WriteProvider)

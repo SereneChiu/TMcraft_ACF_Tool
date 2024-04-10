@@ -36,8 +36,8 @@ namespace Ferrobotics_Setup
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
 
             mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
-            if (false == mSetupModel.GetProjectVariable()) { return; }
             mDo_Editor?.UpdateView();
+            if (false == mSetupModel.GetProjectVariable()) { return; }
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
