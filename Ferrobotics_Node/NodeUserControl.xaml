@@ -39,7 +39,7 @@
             <RowDefinition Height="30"/> <!--14-->
             <RowDefinition Height="30"/> <!--15-->
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="4">
+        <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="5">
             <Image Source="/Ferrobotics_Node;component/Resources/Ferrobotics.png" Stretch="Uniform" HorizontalAlignment="Right" VerticalAlignment="Center"/>
         </Border>
         <Border Grid.Row="0" Padding="10 0 0 0">

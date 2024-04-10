@@ -8,8 +8,14 @@
         <Setter Property="IsEnabled" Value="{Binding Edit_Mode, UpdateSourceTrigger=PropertyChanged}"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <TextBlock Text="{TemplateBinding Text}" Foreground="Black" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="Foreground" Value="Black"/>
@@ -25,16 +31,22 @@
         <Setter Property="IsEnabled" Value="{Binding Edit_Mode, UpdateSourceTrigger=PropertyChanged}"/>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="BorderBrush" Value="White"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <TextBlock Text="{TemplateBinding Text}" Foreground="Black" Padding="7 0 0 0" />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="true">
                 <Setter Property="Foreground" Value="Black"/>
                 <Setter Property="BorderBrush" Value="LightGray"/>
+                <Setter Property="Padding" Value="4 0 0 0"/>
             </Trigger>
         </Style.Triggers>
     </Style>
-
     <Style x:Key="TextBoxStyleForWrite" TargetType="TextBox">
         <Setter Property="FontFamily" Value="Global Sans Serif"/>
         <Setter Property="FontSize" Value="16" />
