@@ -35,10 +35,10 @@ namespace Ferrobotics_Setup
             mSetupModel = SetupModel;
             DataContext = mSetupModel;
             mSetupModel.CallbackFunc = UpdateDataFromUserDefine;
-            InitializeComponent();
-            UpdateDoChannelFromCombobox();
-            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
 
+            InitializeComponent();
+
+            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
@@ -51,21 +51,31 @@ namespace Ferrobotics_Setup
 
         public void UpdateView()
         {
+            if (mSetupModel.CurSelectDoType >= cb_do_type.Items.Count)
+            {
+                mSetupModel.CurSelectDoType = 0;
+            }
+
             cb_do_type.SelectedIndex = mSetupModel.CurSelectDoType;
+            UpdateDoChannelFromCombobox();
 
             if ((mSetupModel.CurSelectDoIdx >= mChbList.Count) || (mChbList.Count == 0)) { return; }
 
             mChbList[mSetupModel.CurSelectDoIdx].IsChecked = true;
+            mChbList[mSetupModel.CurSelectDoIdx].Tag = "ON";
+
+            cb_do_type.SelectionChanged += Cb_do_type_SelectionChanged;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Cb_do_type_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             mSetupModel.CurSelectDoType = (ushort)cb_do_type.SelectedIndex;
             UpdateDoChannelFromCombobox();
+            UpdateDataFromUserDefine();
         }
-
         private void UpdateDoChannelFromCombobox()
         {
+
             if (cb_do_type.SelectedIndex == 1)
             {
                 mSetupModel.DoCount = mSetupModel.DO_END_MODULE;
@@ -79,11 +89,11 @@ namespace Ferrobotics_Setup
         
         private void UpdateDataFromUserDefine()
         {
-            UpdateDo(mSetupModel.DoCount);
+            InitDoLeds(mSetupModel.DoCount);
         }
 
 
-        private void UpdateDo(ushort DoCount)
+        private void InitDoLeds(ushort DoCount)
         {
             if (page_do == null) { return; }
 
@@ -102,14 +112,38 @@ namespace Ferrobotics_Setup
                 RadioButton btn = new RadioButton();
                 btn.Style = (Style)this.Resources["chkBullet"];
                 btn.IsChecked = false;
-                btn.Tag = "On";
+                btn.Tag = "OFF";
                 btn.Width = 90;
                 btn.Height = 30;
                 btn.Margin = new Thickness(10 + (btn.Width * y_offset), (10 + (btn.Height * x_offset)), 0, 0);
                 btn.Content = idx.ToString();
                 page_do.Children.Add(btn);
+                btn.Click += Btn_Click;
                 mChbList.Add(btn);
                 y_offset++;
+            }
+
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            RadioButton btn = sender as RadioButton;
+            if (btn == null) { return; }
+
+            if (btn.IsChecked == true)
+            {
+                if (btn.Tag.ToString() == "OFF")
+                {
+                    foreach (var item in mChbList)
+                    {
+                        item.Tag = "OFF";
+                    }
+
+                    btn.Tag = "ON";
+                    return;
+                }
+                btn.IsChecked = false;
+                btn.Tag = "OFF";
             }
 
         }
@@ -153,25 +187,15 @@ namespace Ferrobotics_Setup
 
             bool target_status = (btn_test_output.Content == "Test Output") ? true : false;
 
-            IO_TYPE cur_io_type = (mSetupModel.CurSelectDoType == 0) ? IO_TYPE.CONTROL_BOX : IO_TYPE.END_MODULE;
+            IO_TYPE cur_io_type = (mSetupModel.CurSelectDoType == 1) ? IO_TYPE.END_MODULE : IO_TYPE.CONTROL_BOX;
             uint rtn_error = mSetupModel.TMcraftSetupAPI.IOProvider.WriteDigitOutput(cur_io_type
                                                                                    , 0
                                                                                    , mSetupModel.CurSelectDoIdx
                                                                                    , target_status);
 
-            if (rtn_error != 0) { return; }
+            if (rtn_error != 0) { MessageBox.Show("Set DO value failed!"); return; }
             btn_test_output.Content = (target_status == true) ? "Stop Test" : "Test Output";
         }
-
-        private void btn_clear_all_Click(object sender, RoutedEventArgs e)
-        {
-            foreach (RadioButton chb in mChbList)
-            {
-                if (chb.IsChecked == true)
-                {
-                    chb.IsChecked = false;
-                }
-            }
-        }
+        
     }
 }

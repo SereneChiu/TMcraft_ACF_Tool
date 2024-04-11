@@ -28,16 +28,18 @@ namespace Ferrobotics_Setup
         public SetupUserControl()
         {
             InitializeComponent();
+            InitView();
         }
 
         private void InitView()
         {
             DataContext = mSetupModel;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
+          
+            if (false == mSetupModel.GetProjectVariable()) { return; }
 
             mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
             mDo_Editor?.UpdateView();
-            if (false == mSetupModel.GetProjectVariable()) { return; }
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)

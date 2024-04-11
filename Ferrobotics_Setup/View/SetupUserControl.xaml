@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ferrobotics_Setup"
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="1000">
+             d:DesignHeight="500" d:DesignWidth="900">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <Border BorderBrush="Transparent" BorderThickness="3" Height="500" Width="1000">
+        <Border BorderBrush="Transparent" BorderThickness="3" Height="500" Width="900">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="600"/>
@@ -25,7 +25,7 @@
                 <Grid Grid.Column="0" Margin="0 0 10 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="260"/>
-                        <ColumnDefinition Width="180"/>
+                        <ColumnDefinition Width="210"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
