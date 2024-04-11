@@ -36,8 +36,7 @@ namespace Ferrobotics_Setup
             DataContext = mSetupModel;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
           
-            if (false == mSetupModel.GetProjectVariable()) { return; }
-
+            mSetupModel.GetProjectVariable();
             mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
             mDo_Editor?.UpdateView();
         }
@@ -92,7 +91,6 @@ namespace Ferrobotics_Setup
             script_write_provider?.SaveBufferAsScript();
 
             MessageBox.Show("Set successfully!");
-            mSetupModel.TMcraftSetupAPI.Close();
         }
 
         private void btn_connect_Click(object sender, RoutedEventArgs e)

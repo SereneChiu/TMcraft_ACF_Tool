@@ -151,13 +151,15 @@ namespace Ferrobotics_Setup
         private void btn_ok_Click(object sender, RoutedEventArgs e)
         {
             ushort rtn_channel = 0;
-            if (true == GetEnableDoChannel(ref rtn_channel)) 
+            mSetupModel.DoStatus = GetEnableDoChannel(ref rtn_channel);
+
+            if (true == mSetupModel.DoStatus) 
             {
                 mSetupModel.CurSelectDoIdx = rtn_channel;
             }
+            SaveData = true;
 
             if (false == (this.Parent is Window)) { return; }
-            SaveData = true;
             ((Window)(this.Parent as Window)).Close();
         }
 

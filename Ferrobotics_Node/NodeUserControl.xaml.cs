@@ -105,8 +105,13 @@ namespace Ferrobotics_Node
             script_list.Add("Sleep(5)");
             script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
             script_list.Add("Sleep(5)");
-            script_list.Add(string.Format("IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel] = {0}"
+            if (mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_do_status"].VarValue == "True")
+            {
+                script_list.Add(string.Format("IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel] = {0}"
                                         , target_do));
+            }
+
+            
             script_list.Add(string.Format("var_node_name=\"{0}\"\r\nvar_f_target=\"{1}\"\r\nvar_f_zero=\"{2}\"\r\nvar_t_ramp=\"{3}\"\r\nvar_f_payload=\"{4}\""
                                          , mNodeViewModel.SetDataModel.NodeName.ToString()
                                          , mNodeViewModel.SetDataModel.SetParam1.ToString()

@@ -35,7 +35,7 @@ namespace VariableManager
             mVarDict.Clear();
             mVarDict = new Dictionary<string, VariableData>()
             {
-                { mVarNameList[0], new VariableData(mVarNameList[0], VariableType.String, "\"192.168.99.1\"") }
+                { mVarNameList[0], new VariableData(mVarNameList[0], VariableType.String, "192.168.99.1") }
               , { mVarNameList[1], new VariableData(mVarNameList[1], VariableType.Integer, "7070") }
               , { mVarNameList[2], new VariableData(mVarNameList[2], VariableType.String, "") }
               , { mVarNameList[3], new VariableData(mVarNameList[3], VariableType.Integer, "") }
@@ -50,7 +50,7 @@ namespace VariableManager
                 mVarDict[VarName] = new VariableData(VarName, VarType, VarValue);
                 return; 
             }
-            mVarDict.Add(VarName, new VariableData(VarName, VarType, string.Format("\"{0}\"", VarValue)));
+            mVarDict.Add(VarName, new VariableData(VarName, VarType, VarValue));
         }
 
         public void UpdateDictData(string Key, string Value)

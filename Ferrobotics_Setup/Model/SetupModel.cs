@@ -85,7 +85,9 @@ namespace Ferrobotics_Setup.Model
         {
             get
             {
-                string type_str = (CurSelectDoType == 0) ? "Control Box" : "End Module";
+                if (DoStatus == false) { return "Unknown"; }
+
+                string type_str = (CurSelectDoType == 0) ? "ControlBox" : "EndModule";
                 return string.Format("{0}: DO {1}", type_str, CurSelectDoIdx.ToString());
             }
         }
@@ -117,7 +119,6 @@ namespace Ferrobotics_Setup.Model
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(3).Key, CurSelectDoIdx.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
         }
-
         public bool UpdateProjectVariableValueFromData()
         {
             bool rtn_state = false;
@@ -133,7 +134,7 @@ namespace Ferrobotics_Setup.Model
 
             ushort out_port = 0;
 
-            this.Ip = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_ip"].VarValue;
+            this.Ip = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_ip"].VarValue.Replace("\"","");
             if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_port"].VarValue, out out_port))
             {
                 this.Port = out_port;
@@ -145,8 +146,8 @@ namespace Ferrobotics_Setup.Model
                 this.CurSelectDoIdx = out_do_index;
             }
 
-            this.CurSelectDoType = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_type"].VarValue == "0") ? (ushort)0 : (ushort)1;
-
+            this.CurSelectDoType = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_type"].VarValue.Replace("\"", "") == "ControlBox") ? (ushort)0 : (ushort)1;
+            this.DoStatus = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_status"].VarValue == "True") ? true : false;
             return rtn_result;
         }
 

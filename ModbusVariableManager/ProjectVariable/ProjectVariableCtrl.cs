@@ -80,10 +80,7 @@ namespace VariableManager
             foreach (string key_str in VariableModel.VarTable.Keys)
             {
                 VariableInfo var_info = rtn_var_list.First(p => p.Name == "var_" + key_str);
-                if (var_info == null)
-                {
-                    return false;
-                }
+                if (var_info == null) { continue; }
 
                 VariableModel.VarTable[key_str].VarValue = var_info.value;
             }
@@ -92,10 +89,12 @@ namespace VariableManager
 
         public void UpdateProjectVariableFromData(ref bool RtnState)
         {
-            if (CheckFunctionExist() == false) { RtnState = false; }
+            if (CheckFunctionExist() == false) { RtnState = false; return; }
 
             List<string[]> value_list = new List<string[]>();
-            
+
+            if (mVariableModel.VarTable.Values.Count == 0) { RtnState = false; return; }
+
             foreach (VariableData var in mVariableModel.VarTable.Values)
             {
                 if (false == this.IsProjectVariableExist(var.VarName))
@@ -105,8 +104,6 @@ namespace VariableManager
                 value_list.Add(new string[] { "var_" + var.VarName, var.VarValue });
                 RtnState = true;
             }
-            if (RtnState == false) { return; }
-
             this.ChangeProjectVariableValue(value_list);
 
             RtnState = true;

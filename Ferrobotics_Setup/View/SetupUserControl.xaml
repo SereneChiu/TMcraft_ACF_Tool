@@ -15,9 +15,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <DockPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+    <DockPanel VerticalAlignment="Top" HorizontalAlignment="Left">
         <Border BorderBrush="Transparent" BorderThickness="3" Height="500" Width="900">
-            <Grid VerticalAlignment="Center">
+            <Grid VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="600"/>
                     <ColumnDefinition/>
