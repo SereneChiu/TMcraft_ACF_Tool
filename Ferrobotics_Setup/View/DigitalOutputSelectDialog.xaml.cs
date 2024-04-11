@@ -59,7 +59,11 @@ namespace Ferrobotics_Setup
             cb_do_type.SelectedIndex = mSetupModel.CurSelectDoType;
             UpdateDoChannelFromCombobox();
 
-            if ((mSetupModel.CurSelectDoIdx >= mChbList.Count) || (mChbList.Count == 0)) { return; }
+            if ((mSetupModel.CurSelectDoIdx >= mChbList.Count) || (mChbList.Count == 0)) 
+            { 
+                cb_do_type.SelectionChanged += Cb_do_type_SelectionChanged;
+                return; 
+            }
 
             mChbList[mSetupModel.CurSelectDoIdx].IsChecked = true;
             mChbList[mSetupModel.CurSelectDoIdx].Tag = "ON";
@@ -156,6 +160,11 @@ namespace Ferrobotics_Setup
             if (true == mSetupModel.DoStatus) 
             {
                 mSetupModel.CurSelectDoIdx = rtn_channel;
+            }
+            else
+            {
+                mSetupModel.CurSelectDoIdx = 0;
+                mSetupModel.CurSelectDoType = 0;
             }
             SaveData = true;
 

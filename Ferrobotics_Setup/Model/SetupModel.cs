@@ -50,7 +50,19 @@ namespace Ferrobotics_Setup.Model
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
         public string DeviceName { get { return mDevName; } set { mDevName = value; NotifyPropertyChanged("DeviceName"); } }
         public string ConnectState { get { return mConnectState; } set { mConnectState = value; NotifyPropertyChanged("ConnectState"); } }
-        public bool DoStatus { get { return mDoStatus; } set { mDoStatus = value; NotifyPropertyChanged("DoStatus"); } }
+        public bool DoStatus 
+        { 
+            get 
+            { 
+                return mDoStatus; 
+            } 
+            set 
+            { 
+                mDoStatus = value; 
+                NotifyPropertyChanged("DoStatus");  
+                NotifyPropertyChanged("CurSelectDoStr");
+            }
+        }
         public bool Edit_Mode { get { return mEdit_Mode; } set { mEdit_Mode = value; NotifyPropertyChanged("Edit_Mode"); } }
 
         

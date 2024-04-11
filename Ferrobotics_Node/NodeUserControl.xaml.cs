@@ -85,14 +85,14 @@ namespace Ferrobotics_Node
                 return;
             }
 
-            foreach(string str in save_data_table.Keys)
+            foreach (string str in save_data_table.Keys)
             {
-                mProjectVariableCtrl.VariableModel.AddProjectVariable(str, save_data_table[str]);
+                mProjectVariableCtrl.VariableModel.AddProjectVariable(str, string.Format("\"{0}\"", save_data_table[str]));
             }
 
             mProjectVariableCtrl.UpdateProjectVariableFromData(ref rtn_result);
 
-        
+
 
             string cmd = string.Format("GetBytes(\"{0}\")"
                                    , mNodeViewModel.SetDataModel.WriteData);
