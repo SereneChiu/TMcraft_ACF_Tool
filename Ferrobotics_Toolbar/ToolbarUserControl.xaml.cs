@@ -114,7 +114,7 @@ namespace Ferrobotics_Toolbar
             string[] data_read = mCommunicationCtrl.ReadData().Split(' ');
             if (data_read.Length == 5) 
             {
-                mToolbarViewModel.GetParam1 = Convert.ToDecimal(data_read[1]);
+                mToolbarViewModel.GetParam1 = Math.Truncate(Convert.ToDecimal(data_read[1]));
                 mToolbarViewModel.GetParam2 = Convert.ToDecimal(data_read[2]);
                 mToolbarViewModel.GetParam3 = Convert.ToDecimal(data_read[3]);
                 mToolbarViewModel.GetParam4 = Convert.ToDecimal(data_read[4].Replace("k", ""));

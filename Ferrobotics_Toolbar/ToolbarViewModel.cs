@@ -36,10 +36,6 @@ namespace Ferrobotics_Toolbar
         public decimal GetParam3 { get { return mGetParam3; } set { mGetParam3 = value; NotifyPropertyChanged("GetParam3"); } }
         public decimal GetParam4 { get { return mGetParam4; } set { mGetParam4 = value; NotifyPropertyChanged("GetParam4"); } }
 
-        public decimal SetParam1 { get { return mSetDataModel.SetParam1; } }
-        public decimal SetParam2 { get { return mSetDataModel.SetParam2; } }
-        public decimal SetParam3 { get { return mSetDataModel.SetParam3; } }
-        public decimal SetParam4 { get { return mSetDataModel.SetParam4; } }
         public string WriteData { get { return mSetDataModel.WriteData; } }
 
 
