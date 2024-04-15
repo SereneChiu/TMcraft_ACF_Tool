@@ -19,7 +19,7 @@ namespace Ferrobotics_Controller
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
         private string mNodeName = "ACF Control";
-        private string mSetParamName_4 = "Payload:";
+        private string mSetParamName_4 = "Payload (Fmax/10):";
         private string mSetParamUnit_4 = "Kg";
         private bool mTargetDo = false;
         private bool mDisplay = false;
@@ -38,10 +38,63 @@ namespace Ferrobotics_Controller
                                  "\r\nSet the time of the force ramp with set_t_ramp. Deactivate the force ramp functionality by setting set_t_ramp to 0.";
 
         public bool Edit_Mode { get { return mEdit_Mode; } set { mEdit_Mode = value; NotifyPropertyChanged("Edit_Mode"); } } 
-        public decimal SetParam1 { get { return mSetParam1; } set { mSetParam1 = value; NotifyPropertyChanged("SetParam1"); } }
-        public decimal SetParam2 { get { return mSetParam2; } set { mSetParam2 = value; NotifyPropertyChanged("SetParam2"); } }
-        public decimal SetParam3 { get { return mSetParam3; } set { mSetParam3 = value; NotifyPropertyChanged("SetParam3"); } }
-        public decimal SetParam4 { get { return mSetParam4; } set { mSetParam4 = value; NotifyPropertyChanged("SetParam4"); } }
+        public decimal SetParam1 
+        { 
+            get 
+            { 
+                return mSetParam1; 
+            } 
+            set 
+            {
+                mSetParam1 = value; 
+                NotifyPropertyChanged("SetParam1"); 
+            } 
+        }
+        public decimal SetParam2 
+        { 
+            get 
+            {
+                return mSetParam2; 
+            } 
+            set 
+            { 
+                mSetParam2 = value; 
+                NotifyPropertyChanged("SetParam2"); 
+            } 
+        }
+        public decimal SetParam3 
+        { 
+            get 
+            { 
+                return mSetParam3; 
+            } 
+            set 
+            { 
+                if (value > 10 || value < 0)
+                {
+                    return;
+                }
+                mSetParam3 = value; 
+                NotifyPropertyChanged("SetParam3"); 
+            } 
+        }
+        public decimal SetParam4 
+        { 
+            get 
+            { 
+                return mSetParam4; 
+            } 
+            set 
+            {
+                decimal maximun = Math.Abs(SetParam1) / 10;
+                if (value > maximun)
+                {
+                    return;
+                }
+                mSetParam4 = value; 
+                NotifyPropertyChanged("SetParam4"); 
+            } 
+        }
         public string WriteData { get { return mWriteData; } set { mWriteData = value; NotifyPropertyChanged("WriteData"); } }
         public string NodeName { get { return mNodeName; } set { mNodeName = value; NotifyPropertyChanged("NodeName"); } }
 
@@ -86,7 +139,7 @@ namespace Ferrobotics_Controller
 
                 NotifyPropertyChanged("DevEntries");
 
-                SetParamName_4 = (mDevEntry == "AOK-AAK") ? "Speed:" : "Payload:";
+                SetParamName_4 = (mDevEntry == "AOK-AAK") ? "Speed:" : "Payload (Fmax/10):";
                 SetParamUnit_4 = (mDevEntry == "AOK-AAK") ? "RPM" : "Kg";
 
                 NotifyPropertyChanged("SetParamName_4");

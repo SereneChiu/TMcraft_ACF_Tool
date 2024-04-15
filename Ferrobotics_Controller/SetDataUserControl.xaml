@@ -42,11 +42,11 @@
 
         <TextBox Grid.Row="2" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
         <TextBox Grid.Row="3" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
-        <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="t_ramp:" />
+        <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="t_ramp (0~10):" />
         <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamName_4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
 
-        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged}" />
         <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam3, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
         <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
 

@@ -90,10 +90,10 @@
                     <TextBox Grid.Row="11" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="act_contact_state:"  />
                     <TextBox Grid.Row="12" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="act_error_code:" />
 
-                    <Label Grid.Row="9" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam1, StringFormat={}{0:0.0}}"/>
+                    <Label Grid.Row="9" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam1}"/>
                     <Label Grid.Row="10" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam2, StringFormat={}{0:0.0}}"/>
-                    <Label Grid.Row="11" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam3, StringFormat={}{0:0.0}}" />
-                    <Label Grid.Row="12" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam4, StringFormat={}{0:0.0}}"/>
+                    <Label Grid.Row="11" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam3}" />
+                    <Label Grid.Row="12" Grid.Column="1" Style="{DynamicResource LabelStyle}" Content="{Binding GetParam4}"/>
 
                     <TextBox Grid.Row="9" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N"  />
                     <TextBox Grid.Row="10" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="mm"/>
