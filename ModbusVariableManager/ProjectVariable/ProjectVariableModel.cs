@@ -20,6 +20,7 @@ namespace VariableManager
           , "ferrobotics_do_type"
           , "ferrobotics_do_channel"
           , "ferrobotics_do_status"
+          , "ferrobotics_tool_type"
         };
 
         private Dictionary<string, VariableData> mVarDict = new Dictionary<string, VariableData>();
@@ -40,6 +41,7 @@ namespace VariableManager
               , { mVarNameList[2], new VariableData(mVarNameList[2], VariableType.String, "") }
               , { mVarNameList[3], new VariableData(mVarNameList[3], VariableType.Integer, "") }
               , { mVarNameList[4], new VariableData(mVarNameList[4], VariableType.Boolean, "") }
+              , { mVarNameList[5], new VariableData(mVarNameList[5], VariableType.String, "ACF / ACF-K / ATK") }
             };
         }
 

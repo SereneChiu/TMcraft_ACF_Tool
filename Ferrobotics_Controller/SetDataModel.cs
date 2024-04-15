@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using VariableManager;
 
 namespace Ferrobotics_Controller
 {
@@ -17,9 +19,13 @@ namespace Ferrobotics_Controller
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
         private string mNodeName = "ACF Control";
+        private string mSetParamName_4 = "Payload:";
+        private string mSetParamUnit_4 = "Kg";
         private bool mTargetDo = false;
         private bool mDisplay = false;
         private Visibility mBtnWriteVisible = Visibility.Visible;
+        private CollectionView mDevEntries;
+        private string mDevEntry = "ACF / ACF-K / ATK";
 
         private string mTitleDesc = "Operation Parameters Information:";
         private string mTargetDesc  = "f__target:  A positive target force means the ACF will be pushing, while a negative target force means pulling.";
@@ -39,6 +45,9 @@ namespace Ferrobotics_Controller
         public string WriteData { get { return mWriteData; } set { mWriteData = value; NotifyPropertyChanged("WriteData"); } }
         public string NodeName { get { return mNodeName; } set { mNodeName = value; NotifyPropertyChanged("NodeName"); } }
 
+        public string SetParamName_4 { get { return mSetParamName_4; } set { mSetParamName_4 = value; NotifyPropertyChanged("SetParamName_4"); } }
+        public string SetParamUnit_4 { get { return mSetParamUnit_4; } set { mSetParamUnit_4 = value; NotifyPropertyChanged("SetParamUnit_4"); } }
+
         public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
         public bool Display { get { return mDisplay; } set { mDisplay = value; NotifyPropertyChanged("Display"); } }
 
@@ -50,6 +59,40 @@ namespace Ferrobotics_Controller
         public string SpeedDesc { get { return mSpeedDesc; } set { mSpeedDesc = value; NotifyPropertyChanged("SpeedDesc"); } }
         public string DetailDesc { get { return mDetailDesc; } set { mDetailDesc = value; NotifyPropertyChanged("DetailDesc"); } }
         public Visibility BtnWriteVisible { get { return mBtnWriteVisible; } set { mBtnWriteVisible = value; NotifyPropertyChanged("BtnWriteVisible"); } }
+
+
+        public void InitView()
+        {
+            IList<AcfDevType> list = new List<AcfDevType>();
+            list.Add(new AcfDevType("ACF / ACF-K / ATK"));
+            list.Add(new AcfDevType("AOK-AAK"));
+            mDevEntries = new CollectionView(list);
+        }
+
+        
+
+        public CollectionView DevEntries
+        {
+            get { return mDevEntries; }
+        }
+
+        public string DevEntry
+        {
+            get { return mDevEntry; }
+            set
+            {
+                if (mDevEntry == value) return;
+                mDevEntry = value;
+
+                NotifyPropertyChanged("DevEntries");
+
+                SetParamName_4 = (mDevEntry == "AOK-AAK") ? "Speed:" : "Payload:";
+                SetParamUnit_4 = (mDevEntry == "AOK-AAK") ? "RPM" : "Kg";
+
+                NotifyPropertyChanged("SetParamName_4");
+                NotifyPropertyChanged("SetParamUnit_4");
+            }
+        }
 
         public void MergeStringData()
         {

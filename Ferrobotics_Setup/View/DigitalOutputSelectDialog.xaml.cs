@@ -76,10 +76,10 @@ namespace Ferrobotics_Setup
             mSetupModel.CurSelectDoType = (ushort)cb_do_type.SelectedIndex;
             UpdateDoChannelFromCombobox();
             UpdateDataFromUserDefine();
+
         }
         private void UpdateDoChannelFromCombobox()
         {
-
             if (cb_do_type.SelectedIndex == 1)
             {
                 mSetupModel.DoCount = mSetupModel.DO_END_MODULE;

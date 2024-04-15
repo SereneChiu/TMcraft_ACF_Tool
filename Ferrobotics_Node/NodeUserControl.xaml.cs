@@ -35,6 +35,12 @@ namespace Ferrobotics_Node
             mNodeViewModel.SetDataModel.BtnWriteVisible = Visibility.Hidden;
             DataContext = mNodeViewModel.SetDataModel;
             mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
+
+            if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type") == true)
+            {
+                mNodeViewModel.SetDataModel.DevEntry = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_tool_type"].VarValue.Replace("\"", "");
+            }
+
             panel_ctrl.Content = mSetDataUserControl;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
         }
@@ -56,8 +62,8 @@ namespace Ferrobotics_Node
                                                  , mTMcraftNodeAPI.VariableProvider.CreateProjectVariable
                                                  , mTMcraftNodeAPI.VariableProvider.ChangeProjectVariableValue
                                                  , mTMcraftNodeAPI.VariableProvider.GetProjectVariableList);
-            InitView();
             mProjectVariableCtrl.UpdateDataFromProjectVariable();
+            InitView();
             GetDataFromNode();
         }
 
@@ -78,21 +84,12 @@ namespace Ferrobotics_Node
             save_data_table.Add("display", mNodeViewModel.SetDataModel.Display.ToString());
             mTMcraftNodeAPI?.DataStorageProvider.SaveData(save_data_table);
 
-            if (mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_type") == false
-                || mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_channel") == false)
-            {
-                MessageBox.Show("Please set do channel in Start Node first!");
-                return;
-            }
-
             foreach (string str in save_data_table.Keys)
             {
                 mProjectVariableCtrl.VariableModel.AddProjectVariable(str, string.Format("\"{0}\"", save_data_table[str]));
             }
 
             mProjectVariableCtrl.UpdateProjectVariableFromData(ref rtn_result);
-
-
 
             string cmd = string.Format("GetBytes(\"{0}\")"
                                    , mNodeViewModel.SetDataModel.WriteData);
@@ -122,7 +119,15 @@ namespace Ferrobotics_Node
 
             if (mNodeViewModel.SetDataModel.Display == true)
             {
-                script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = \"+IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel])");
+                if (mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_type") == false
+                 || mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_channel") == false)
+                {
+                    script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = Disable\")");
+                }
+                else
+                {
+                    script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = \"+IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel])");
+                }
             }
 
             foreach (string script in script_list) { WriteProvider?.AppendLine(script); }

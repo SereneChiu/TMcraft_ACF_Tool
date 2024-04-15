@@ -28,6 +28,7 @@ namespace Ferrobotics_Controller
             InitializeComponent();
 
             mSetDataModel = DataModel;
+            mSetDataModel.InitView();
             DataContext = mSetDataModel;
         }
 

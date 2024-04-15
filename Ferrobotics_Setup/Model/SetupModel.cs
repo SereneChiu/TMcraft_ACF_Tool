@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Data;
 using TMcraft;
 using VariableManager;
 
@@ -41,11 +42,12 @@ namespace Ferrobotics_Setup.Model
         private ushort mCurSelectDoType = 0;
         private string mIp = "192.168.99.1";
         private ushort mPort = 7070;
-        private string mDevName = "ACF-K ER";
+        private string mDevName = "ACF / ACF-K / ATK ER";
         private string mConnectState = "Unknown";
         private bool mDoStatus = false;
         private bool mEdit_Mode = false;
-
+        private CollectionView mDevEntries;
+        private string mDevEntry = "ACF / ACF-K / ATK";
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
         public string DeviceName { get { return mDevName; } set { mDevName = value; NotifyPropertyChanged("DeviceName"); } }
@@ -118,6 +120,37 @@ namespace Ferrobotics_Setup.Model
             } 
         }
 
+
+        public void InitView()
+        {
+            IList<AcfDevType> list = new List<AcfDevType>();
+            list.Add(new AcfDevType("ACF / ACF-K / ATK"));
+            list.Add(new AcfDevType("AOK-AAK"));
+            mDevEntries = new CollectionView(list);
+        }
+
+
+
+        public CollectionView DevEntries
+        {
+            get { return mDevEntries; }
+        }
+
+        public string DevEntry
+        {
+            get { return mDevEntry; }
+            set
+            {
+                if (mDevEntry == value) return;
+                mDevEntry = value;
+                DeviceName = mDevEntry + " ER";
+                NotifyPropertyChanged("DeviceName");
+                NotifyPropertyChanged("DevEntries");
+            }
+        }
+
+
+
         public void UpdateDictData(bool UpdateDo)
         {
             if (UpdateDo == true)
@@ -130,6 +163,7 @@ namespace Ferrobotics_Setup.Model
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(1).Key, Port.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(3).Key, CurSelectDoIdx.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(5).Key, string.Format("\"{0}\"", DevEntry));
         }
         public bool UpdateProjectVariableValueFromData()
         {
@@ -146,20 +180,44 @@ namespace Ferrobotics_Setup.Model
 
             ushort out_port = 0;
 
-            this.Ip = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_ip"].VarValue.Replace("\"","");
-            if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_port"].VarValue, out out_port))
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_ip"))
             {
-                this.Port = out_port;
+                this.Ip = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_ip"].VarValue.Replace("\"", "");
             }
 
-            ushort out_do_index = 0;
-            if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_channel"].VarValue, out out_do_index))
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_port"))
             {
-                this.CurSelectDoIdx = out_do_index;
+                if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_port"].VarValue, out out_port))
+                {
+                    this.Port = out_port;
+                }
+            }
+            
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_do_channel"))
+            {
+                ushort out_do_index = 0;
+
+                if (true == UInt16.TryParse(mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_channel"].VarValue, out out_do_index))
+                {
+                    this.CurSelectDoIdx = out_do_index;
+                }
+            }
+           
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type"))
+            {
+                this.DevEntry = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_tool_type"]?.VarValue?.Replace("\"", "");
             }
 
-            this.CurSelectDoType = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_type"].VarValue.Replace("\"", "") == "ControlBox") ? (ushort)0 : (ushort)1;
-            this.DoStatus = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_status"].VarValue == "True") ? true : false;
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_do_type"))
+            {
+                this.CurSelectDoType = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_type"]?.VarValue?.Contains("ControlBox") == true) ? (ushort)0 : (ushort)1;
+            }
+
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_do_status"))
+            {
+                this.DoStatus = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_status"]?.VarValue == "True") ? true : false;
+            }
+
             return rtn_result;
         }
 

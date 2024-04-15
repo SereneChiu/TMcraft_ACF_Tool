@@ -51,8 +51,7 @@ namespace VariableManager
             List<VariableInfo> var_list = new List<VariableInfo>();
 
             if (GetProjectVarList(ref var_list) == false) { return false; }
-            if (null == var_list.First(p => p.Name == VariableName)) { return false; }
-            return true;
+            return var_list.Exists(p => p.Name == VariableName);
         }
 
         private bool GetProjectVarList(ref List<VariableInfo> RtnVarList)
@@ -79,9 +78,12 @@ namespace VariableManager
 
             foreach (string key_str in VariableModel.VarTable.Keys)
             {
-                VariableInfo var_info = rtn_var_list.First(p => p.Name == "var_" + key_str);
-                if (var_info == null) { continue; }
+                if (rtn_var_list.Exists(p => p.Name == "var_" + key_str) == false)
+                {
+                    continue;
+                }
 
+                VariableInfo var_info = rtn_var_list.First(p => p.Name == "var_" + key_str);
                 VariableModel.VarTable[key_str].VarValue = var_info.value;
             }
             return true;

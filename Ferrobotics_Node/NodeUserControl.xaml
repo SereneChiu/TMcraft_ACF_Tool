@@ -16,7 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid Width="1000" Height="600" VerticalAlignment="Top">
+    <Grid Width="1000" Height="700" VerticalAlignment="Top">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="440"/>
             <ColumnDefinition/>
@@ -24,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/> <!--0-->
             <RowDefinition Height="30"/> <!--1-->
-            <RowDefinition Height="150"/><!--2-->
+            <RowDefinition Height="180"/><!--2-->
             <RowDefinition Height="30"/> <!--3-->
             <RowDefinition Height="30"/> <!--4-->
             <RowDefinition Height="30"/> <!--5-->
@@ -37,6 +37,7 @@
             <RowDefinition Height="30"/> <!--12-->
             <RowDefinition Height="30"/> <!--13-->
             <RowDefinition Height="30"/> <!--14-->
+            <RowDefinition Height="30"/> <!--15-->
             <RowDefinition Height="30"/> <!--15-->
         </Grid.RowDefinitions>
         <Border Grid.Row="0" Grid.Column="1" Grid.RowSpan="5">

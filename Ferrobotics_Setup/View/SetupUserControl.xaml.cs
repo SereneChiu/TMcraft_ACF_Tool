@@ -28,7 +28,6 @@ namespace Ferrobotics_Setup
         public SetupUserControl()
         {
             InitializeComponent();
-            InitView();
         }
 
         private void InitView()
@@ -37,6 +36,7 @@ namespace Ferrobotics_Setup
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
           
             mSetupModel.GetProjectVariable();
+            mSetupModel.InitView();
             mDo_Editor = new DigitalOutputSelectDialog(mSetupModel);
             mDo_Editor?.UpdateView();
         }
