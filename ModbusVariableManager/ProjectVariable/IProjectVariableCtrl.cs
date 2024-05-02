@@ -10,6 +10,7 @@ namespace VariableManager
     public interface IProjectVariableCtrl
     {
         ProjectVariableModel VariableModel { get; }
+        AcfDevTypeModel AcfDevTypeModel { get; }
 
         void UpdateFunctionPtr(IsProjectVariableExistFunc IsProjectVariableExist
                              , CreateProjectVariableFunc CreateProjectVariable

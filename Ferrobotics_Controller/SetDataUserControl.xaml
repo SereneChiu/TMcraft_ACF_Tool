@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Ferrobotics_Controller"
              mc:Ignorable="d" 
-             d:DesignHeight="180" d:DesignWidth="440">
+             d:DesignHeight="210" d:DesignWidth="440">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -29,31 +29,40 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Control:" />
         <Button Grid.Row="0" Grid.Column="1" Visibility="{Binding BtnWriteVisible}" Content="Write Data" Click="Button_Click" Style="{DynamicResource StandardButton}"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Select Tool:" />
+        <Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Select tool:" />
         <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=DevEntries}"
                   DisplayMemberPath="TypeName"
                   SelectedValuePath="TypeName"
                   SelectedValue="{Binding Path=DevEntry}" Style="{DynamicResource ComboBoxStyle}" />
 
-        <TextBox Grid.Row="2" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
-        <TextBox Grid.Row="3" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
-        <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="t_ramp (0~10):" />
-        <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamName_4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <Label Grid.Row="2" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Select tool type:" />
+        <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="260" 
+                  ItemsSource="{Binding Path=DevSubEntries}"
+                  DisplayMemberPath="TypeName"
+                  SelectedValuePath="TypeName"
+                  SelectedValue="{Binding Path=DevSubEntry}" 
+                  Style="{DynamicResource ComboBoxStyle}" />
 
-        <TextBox Grid.Row="2" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged}" />
-        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged}" />
-        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam3, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-        <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <TextBox Grid.Row="3" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_target:" />
+        <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="f_zero:" />
+        <TextBox Grid.Row="5" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="t_ramp (0~10):" />
+        <TextBox Grid.Row="6" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamName_4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
 
-        <TextBox Grid.Row="2" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
+        <TextBox Grid.Row="3" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam1, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam2, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="5" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam3, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
+        <TextBox Grid.Row="6" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" IsEnabled="{Binding InputValueEditable}" />
+
         <TextBox Grid.Row="3" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
-        <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s" />
-        <TextBox Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamUnit_4, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="N" />
+        <TextBox Grid.Row="5" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s" />
+        <TextBox Grid.Row="6" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamUnit_4, UpdateSourceTrigger=PropertyChanged}" />
 
     </Grid>
 </UserControl>

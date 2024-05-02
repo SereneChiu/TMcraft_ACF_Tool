@@ -42,12 +42,33 @@ namespace Ferrobotics_Setup.Model
         private ushort mCurSelectDoType = 0;
         private string mIp = "192.168.99.1";
         private ushort mPort = 7070;
-        private string mDevName = "ACF / ACF-K / ATK ER";
+        private string mDevName = "ACF-K ER";
         private string mConnectState = "Unknown";
         private bool mDoStatus = false;
         private bool mEdit_Mode = false;
         private CollectionView mDevEntries;
-        private string mDevEntry = "ACF / ACF-K / ATK";
+        private CollectionView mDevSubEntries;
+        private string mDevEntry = "ACF-K";
+        private string mDevSubEntry = "ACF-K / Dyn / 56819 00 (1.5 kg)";
+
+
+        //private Dictionary<string, double> mDevPayloadTable = new Dictionary<string, double>()
+        //{
+        //    { "ACF-K / Dyn / 56819 00 (1.5 kg)", 1.5 }
+        //  , { "ACF-K / Dyn / 56830 00 (1.5 kg)", 1.5 }
+        //  , { "ACF-K / Dyn / 57814 00 (1.7 kg)", 1.7 }
+        //  , { "ACF-K / Dyn / 15360 00 (1.8 kg)", 1.8 }
+        //  , { "ACF-K / Dyn / 13214 00 (1.5 kg)", 1.5 }
+        //  , { "ACF-K / Dyn / 52276 00 (1.4 kg)", 1.4 }
+        //  , { "ACF-K / Dyn / 52276 01 (1.5 kg)", 1.5 }
+        //  , { "ACF-K / Dyn / 54771 00 (1.6 kg)", 1.6 }
+        //  , { "ACF-K / Dyn / 52635 00 (2.5 kg)", 2.5 }
+        //  , { "ACF-K / Dyn / 52639 00 (2.5 kg)", 2.5 }
+        //  , { "Others (Payload input directly by user)", 0.0 }
+
+        //};
+
+
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
         public string DeviceName { get { return mDevName; } set { mDevName = value; NotifyPropertyChanged("DeviceName"); } }
@@ -120,20 +141,19 @@ namespace Ferrobotics_Setup.Model
             } 
         }
 
-
         public void InitView()
         {
-            IList<AcfDevType> list = new List<AcfDevType>();
-            list.Add(new AcfDevType("ACF / ACF-K / ATK"));
-            list.Add(new AcfDevType("AOK-AAK"));
-            mDevEntries = new CollectionView(list);
+            mDevEntries = new CollectionView(mProjectVarCtrl.AcfDevTypeModel.DevEntries);
         }
-
-
 
         public CollectionView DevEntries
         {
             get { return mDevEntries; }
+        }
+
+        public CollectionView DevSubEntries
+        {
+            get { return mDevSubEntries; }
         }
 
         public string DevEntry
@@ -149,7 +169,15 @@ namespace Ferrobotics_Setup.Model
             }
         }
 
-
+        public string DevSubEntry
+        {
+            get { return mDevSubEntry; }
+            set
+            {
+                mDevSubEntry = value;
+                NotifyPropertyChanged("DevSubEntry");
+            }
+        }
 
         public void UpdateDictData(bool UpdateDo)
         {

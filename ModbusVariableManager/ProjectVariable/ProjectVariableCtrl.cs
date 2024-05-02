@@ -16,12 +16,15 @@ namespace VariableManager
         public delegate uint GetProjectVariableListFunc(ref List<VariableInfo> RtnVarList);
 
         private ProjectVariableModel mVariableModel = new ProjectVariableModel();
+        private AcfDevTypeModel mAcfDevTypeModel = new AcfDevTypeModel();
         private IsProjectVariableExistFunc IsProjectVariableExist = null;
         private CreateProjectVariableFunc CreateProjectVariable = null;
         private ChangeProjectVariableValueFunc ChangeProjectVariableValue = null;
         private GetProjectVariableListFunc GetProjectVariableList = null;
 
         public ProjectVariableModel VariableModel { get { return mVariableModel; } }
+        public AcfDevTypeModel AcfDevTypeModel { get { return mAcfDevTypeModel; } }
+
 
         public void UpdateFunctionPtr(IsProjectVariableExistFunc IsProjectVariableExist
                                     , CreateProjectVariableFunc CreateProjectVariable

@@ -12,6 +12,8 @@ namespace Ferrobotics_Controller
 {
     public class SetDataModel : INotifyPropertyChanged
     {
+        private AcfDevTypeModel mAcfDevTypeModel = new AcfDevTypeModel();
+
         private bool mEdit_Mode = false;
         private decimal mSetParam1 = 0;
         private decimal mSetParam2 = 0;
@@ -19,13 +21,15 @@ namespace Ferrobotics_Controller
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
         private string mNodeName = "ACF Control";
-        private string mSetParamName_4 = "Payload (Fmax/10):";
+        private string mSetParamName_4 = "Payload:";
         private string mSetParamUnit_4 = "Kg";
         private bool mTargetDo = false;
         private bool mDisplay = false;
+        private bool mInputValueEditable = false;
         private Visibility mBtnWriteVisible = Visibility.Visible;
         private CollectionView mDevEntries;
         private string mDevEntry = "ACF / ACF-K / ATK";
+        private string mDevSubEntry = "ACF / ACF-K / ATK";
 
         private string mTitleDesc = "Operation Parameters Information:";
         private string mTargetDesc  = "f__target:  A positive target force means the ACF will be pushing, while a negative target force means pulling.";
@@ -86,11 +90,11 @@ namespace Ferrobotics_Controller
             } 
             set 
             {
-                decimal maximun = Math.Abs(SetParam1) / 10;
-                if (value > maximun)
-                {
-                    return;
-                }
+                //decimal maximun = Math.Abs(SetParam1) / 10;
+                //if (value > maximun)
+                //{
+                //    return;
+                //}
                 mSetParam4 = value; 
                 NotifyPropertyChanged("SetParam4"); 
             } 
@@ -103,6 +107,7 @@ namespace Ferrobotics_Controller
 
         public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
         public bool Display { get { return mDisplay; } set { mDisplay = value; NotifyPropertyChanged("Display"); } }
+        public bool InputValueEditable { get { return mInputValueEditable; } set { mInputValueEditable = value; NotifyPropertyChanged("InputValueEditable"); } }
 
         public string TitleDesc { get { return mTitleDesc; } set { mTitleDesc = value; NotifyPropertyChanged("TitleDesc"); } }
         public string TargetDesc { get { return mTargetDesc; } set { mTargetDesc = value; NotifyPropertyChanged("TargetDesc"); } }
@@ -116,10 +121,7 @@ namespace Ferrobotics_Controller
 
         public void InitView()
         {
-            IList<AcfDevType> list = new List<AcfDevType>();
-            list.Add(new AcfDevType("ACF / ACF-K / ATK"));
-            list.Add(new AcfDevType("AOK-AAK"));
-            mDevEntries = new CollectionView(list);
+            mDevEntries = new CollectionView(mAcfDevTypeModel.DevEntries);
         }
 
         
@@ -127,6 +129,26 @@ namespace Ferrobotics_Controller
         public CollectionView DevEntries
         {
             get { return mDevEntries; }
+        }
+
+        public CollectionView DevSubEntries
+        {
+            get 
+            {
+                CollectionView data;
+                switch (DevEntry)
+                {
+                    case "ACF-K": data = new CollectionView(mAcfDevTypeModel.DevSubEntries_Acfk); break;
+                    case "ACF / ATK": data = new CollectionView(mAcfDevTypeModel.DevSubEntries_Acf); break;
+                    case "AOK-AAK": data = new CollectionView(mAcfDevTypeModel.DevSubEntries_Aok); break;
+                    default:
+                        DevEntry = "ACF-K";
+                        data = new CollectionView(mAcfDevTypeModel.DevSubEntries_Acfk); break;
+                }
+
+               
+                return data;
+            }
         }
 
         public string DevEntry
@@ -138,12 +160,34 @@ namespace Ferrobotics_Controller
                 mDevEntry = value;
 
                 NotifyPropertyChanged("DevEntries");
+                NotifyPropertyChanged("DevSubEntries");
 
-                SetParamName_4 = (mDevEntry == "AOK-AAK") ? "Speed:" : "Payload (Fmax/10):";
+                SetParamName_4 = (mDevEntry == "AOK-AAK") ? "Speed:" : "Payload:";
                 SetParamUnit_4 = (mDevEntry == "AOK-AAK") ? "RPM" : "Kg";
 
                 NotifyPropertyChanged("SetParamName_4");
                 NotifyPropertyChanged("SetParamUnit_4");
+            }
+        }
+
+        public string DevSubEntry
+        {
+            get { return mDevSubEntry; }
+            set
+            {
+                mDevSubEntry = value;
+                AcfDevType type = mAcfDevTypeModel.DevInfoTable.Keys.First(p => p.TypeName == DevEntry);
+                if (type == null) return;
+
+                if (false == mAcfDevTypeModel.DevInfoTable[type].ContainsKey(mDevSubEntry))
+                {
+                    return;
+                }
+
+                SetParam4 = mAcfDevTypeModel.DevInfoTable[type][mDevSubEntry];
+
+                InputValueEditable = (SetParam4 == (decimal)0.0) ? true : false;
+                NotifyPropertyChanged("SetParam4");
             }
         }
 
