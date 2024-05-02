@@ -50,23 +50,9 @@ namespace Ferrobotics_Setup.Model
         private CollectionView mDevSubEntries;
         private string mDevEntry = "ACF-K";
         private string mDevSubEntry = "ACF-K / Dyn / 56819 00 (1.5 kg)";
-
-
-        //private Dictionary<string, double> mDevPayloadTable = new Dictionary<string, double>()
-        //{
-        //    { "ACF-K / Dyn / 56819 00 (1.5 kg)", 1.5 }
-        //  , { "ACF-K / Dyn / 56830 00 (1.5 kg)", 1.5 }
-        //  , { "ACF-K / Dyn / 57814 00 (1.7 kg)", 1.7 }
-        //  , { "ACF-K / Dyn / 15360 00 (1.8 kg)", 1.8 }
-        //  , { "ACF-K / Dyn / 13214 00 (1.5 kg)", 1.5 }
-        //  , { "ACF-K / Dyn / 52276 00 (1.4 kg)", 1.4 }
-        //  , { "ACF-K / Dyn / 52276 01 (1.5 kg)", 1.5 }
-        //  , { "ACF-K / Dyn / 54771 00 (1.6 kg)", 1.6 }
-        //  , { "ACF-K / Dyn / 52635 00 (2.5 kg)", 2.5 }
-        //  , { "ACF-K / Dyn / 52639 00 (2.5 kg)", 2.5 }
-        //  , { "Others (Payload input directly by user)", 0.0 }
-
-        //};
+        private string mInputValueName = "Payload (kg)";
+        private decimal mInputValue = 0;
+        private bool mInputValueEditable = false;
 
 
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
@@ -86,6 +72,21 @@ namespace Ferrobotics_Setup.Model
                 NotifyPropertyChanged("CurSelectDoStr");
             }
         }
+
+        public bool InputValueEditable
+        {
+            get
+            {
+                return mInputValueEditable;
+            }
+            set
+            {
+                mInputValueEditable = value;
+                NotifyPropertyChanged("InputValueEditable");
+            }
+        }
+
+        
         public bool Edit_Mode { get { return mEdit_Mode; } set { mEdit_Mode = value; NotifyPropertyChanged("Edit_Mode"); } }
 
         
@@ -113,6 +114,32 @@ namespace Ferrobotics_Setup.Model
                 mCurSelectDoType = value;
                 NotifyPropertyChanged("CurSelectDoType");
                 NotifyPropertyChanged("CurSelectDoStr");
+            }
+        }
+
+        public string InputValueName
+        {
+            get
+            {
+                return mInputValueName;
+            }
+            set
+            {
+                mInputValueName = value;
+                NotifyPropertyChanged("InputValueName");
+            }
+        }
+
+        public decimal InputValue
+        {
+            get
+            {
+                return mInputValue;
+            }
+            set
+            {
+                mInputValue = value;
+                NotifyPropertyChanged("InputValue");
             }
         }
 
@@ -153,7 +180,34 @@ namespace Ferrobotics_Setup.Model
 
         public CollectionView DevSubEntries
         {
-            get { return mDevSubEntries; }
+            get
+            {
+                CollectionView data;
+                switch (DevEntry)
+                {
+                    case "ACF-K": 
+                        data = new CollectionView(mProjectVarCtrl.AcfDevTypeModel.DevSubEntries_Acfk);
+                        InputValueName = "Payload (kg)";
+                        break;
+
+                    case "ACF / ATK": 
+                        data = new CollectionView(mProjectVarCtrl.AcfDevTypeModel.DevSubEntries_Acf); 
+                        InputValueName = "Payload (kg)";
+                        break;
+                    case "AOK-AAK": 
+                        data = new CollectionView(mProjectVarCtrl.AcfDevTypeModel.DevSubEntries_Aok); 
+                        InputValueName = "Velocity (RPM)";
+                        break;
+
+                    default:
+                        DevEntry = "ACF-K";
+                        data = new CollectionView(mProjectVarCtrl.AcfDevTypeModel.DevSubEntries_Acfk); 
+                        InputValueName = "Payload (kg)";
+                        break;
+                }
+                NotifyPropertyChanged("InputValueName");
+                return data;
+            }
         }
 
         public string DevEntry
@@ -166,6 +220,7 @@ namespace Ferrobotics_Setup.Model
                 DeviceName = mDevEntry + " ER";
                 NotifyPropertyChanged("DeviceName");
                 NotifyPropertyChanged("DevEntries");
+                NotifyPropertyChanged("DevSubEntries");
             }
         }
 
@@ -175,6 +230,21 @@ namespace Ferrobotics_Setup.Model
             set
             {
                 mDevSubEntry = value;
+
+                AcfDevType type = mProjectVarCtrl.AcfDevTypeModel.DevInfoTable.Keys.First(p => p.TypeName == DevEntry);
+                if (type == null) return;
+
+                if (false == mProjectVarCtrl.AcfDevTypeModel.DevInfoTable[type].ContainsKey(mDevSubEntry))
+                {
+                    return;
+                }
+
+                InputValue = mProjectVarCtrl.AcfDevTypeModel.DevInfoTable[type][mDevSubEntry];
+
+                InputValueEditable = (InputValue == (decimal)0.0) ? true : false;
+
+                NotifyPropertyChanged("InputValueEditable");
+                NotifyPropertyChanged("InputValue");
                 NotifyPropertyChanged("DevSubEntry");
             }
         }

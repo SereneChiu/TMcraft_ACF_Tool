@@ -38,6 +38,7 @@ namespace Ferrobotics_Toolbar
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
             chb_edit_mode.Visibility = Visibility.Hidden;
 
+            mToolbarViewModel.SetDataModel.TypeSelectable = true;
             mSetDataUserControl = new SetDataUserControl(mToolbarViewModel.SetDataModel);
             page_control.Content = mSetDataUserControl;
 

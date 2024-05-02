@@ -34,6 +34,7 @@ namespace Ferrobotics_Node
         {
             mNodeViewModel.SetDataModel.BtnWriteVisible = Visibility.Hidden;
             DataContext = mNodeViewModel.SetDataModel;
+            mNodeViewModel.SetDataModel.TypeSelectable = false;
             mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
 
             if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type") == true)

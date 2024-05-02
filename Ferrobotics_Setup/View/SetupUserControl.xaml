@@ -38,6 +38,7 @@
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
                         <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <Label Grid.Row="0" Grid.Column="0" Content="Set the connection of the Ferrobotics Device:"  Grid.ColumnSpan="2" Style="{DynamicResource LabelStyle}"/>
@@ -45,8 +46,9 @@
                     <Label Grid.Row="3" Grid.Column="0" Content="Port:"  Style="{DynamicResource LabelStyle}"/>
                     <Label Grid.Row="4" Grid.Column="0" Content="Select tool name:"  Style="{DynamicResource LabelStyle}"/>
                     <Label Grid.Row="5" Grid.Column="0" Content="Select tool type:"  Style="{DynamicResource LabelStyle}"/>
-                    <Label Grid.Row="6" Grid.Column="0" Content="Device name:"  Style="{DynamicResource LabelStyle}"/>
-                    <Label Grid.Row="7" Grid.Column="0" Content="Digital output for pneumatic:"  Style="{DynamicResource LabelStyle}"/>
+                    <Label Grid.Row="6" Grid.Column="0" Content="{Binding InputValueName}"  Name="lb_type_name"  Style="{DynamicResource LabelStyle}"/>
+                    <Label Grid.Row="7" Grid.Column="0" Content="Device name:"  Style="{DynamicResource LabelStyle}"/>
+                    <Label Grid.Row="8" Grid.Column="0" Content="Digital output for pneumatic:"  Style="{DynamicResource LabelStyle}"/>
                    
                     <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Ip}" Style="{DynamicResource TextBoxStyleForWrite}"/>
                     <TextBox Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Port}" Style="{DynamicResource TextBoxStyleForWrite}"/>
@@ -59,12 +61,12 @@
                               DisplayMemberPath="TypeName"
                               SelectedValuePath="TypeName"
                               SelectedValue="{Binding Path=DevSubEntry}" Style="{DynamicResource ComboBoxStyle}" />
-                   
-                    
-                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DeviceName}" Style="{DynamicResource TextBoxStyle}"/>
-                    <Label Grid.Row="7" Grid.Column="1"  Content="{Binding CurSelectDoStr, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource LabelStyle}"/>
-                    <Button Grid.Row="7" Grid.Column="2"  Content="Browse..." Style="{DynamicResource StandardButton}" Name="btn_browse" Click="btn_browse_Click" />
-                    <Button Grid.Row="8" Grid.Column="1"  Grid.ColumnSpan="2" Content="Apply" Style="{DynamicResource StandardButton}" Name="btn_apply" Click="btn_apply_Click" />
+
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding InputValue}" Style="{DynamicResource TextBoxStyle}" IsEnabled="{Binding InputValueEditable}"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DeviceName}" Style="{DynamicResource TextBoxStyle}"/>
+                    <Label Grid.Row="8" Grid.Column="1"  Content="{Binding CurSelectDoStr, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource LabelStyle}"/>
+                    <Button Grid.Row="8" Grid.Column="2"  Content="Browse..." Style="{DynamicResource StandardButton}" Name="btn_browse" Click="btn_browse_Click" />
+                    <Button Grid.Row="9" Grid.Column="1"  Grid.ColumnSpan="2" Content="Apply" Style="{DynamicResource StandardButton}" Name="btn_apply" Click="btn_apply_Click" />
 
                 </Grid>
                 <Border Grid.Column="1" Padding="0 0 0 0" Margin="0 10 0 0" >

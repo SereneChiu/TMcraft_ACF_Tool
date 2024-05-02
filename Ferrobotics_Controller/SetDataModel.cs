@@ -26,6 +26,7 @@ namespace Ferrobotics_Controller
         private bool mTargetDo = false;
         private bool mDisplay = false;
         private bool mInputValueEditable = false;
+        private bool mTypeSelectable = false;
         private Visibility mBtnWriteVisible = Visibility.Visible;
         private CollectionView mDevEntries;
         private string mDevEntry = "ACF / ACF-K / ATK";
@@ -108,7 +109,7 @@ namespace Ferrobotics_Controller
         public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
         public bool Display { get { return mDisplay; } set { mDisplay = value; NotifyPropertyChanged("Display"); } }
         public bool InputValueEditable { get { return mInputValueEditable; } set { mInputValueEditable = value; NotifyPropertyChanged("InputValueEditable"); } }
-
+        public bool TypeSelectable { get { return mTypeSelectable; } set { mTypeSelectable = value; NotifyPropertyChanged("TypeSelectable"); } }
         public string TitleDesc { get { return mTitleDesc; } set { mTitleDesc = value; NotifyPropertyChanged("TitleDesc"); } }
         public string TargetDesc { get { return mTargetDesc; } set { mTargetDesc = value; NotifyPropertyChanged("TargetDesc"); } }
         public string ZeroDesc { get { return mZeroDesc; } set { mZeroDesc = value; NotifyPropertyChanged("ZeroDesc"); } }
@@ -145,8 +146,6 @@ namespace Ferrobotics_Controller
                         DevEntry = "ACF-K";
                         data = new CollectionView(mAcfDevTypeModel.DevSubEntries_Acfk); break;
                 }
-
-               
                 return data;
             }
         }

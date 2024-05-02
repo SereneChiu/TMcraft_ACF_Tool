@@ -36,13 +36,13 @@
         <Button Grid.Row="0" Grid.Column="1" Visibility="{Binding BtnWriteVisible}" Content="Write Data" Click="Button_Click" Style="{DynamicResource StandardButton}"/>
 
         <Label Grid.Row="1" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Select tool:" />
-        <ComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Path=DevEntries}"
+        <ComboBox Grid.Row="1" Grid.Column="1" IsEnabled="{Binding TypeSelectable}" ItemsSource="{Binding Path=DevEntries}"
                   DisplayMemberPath="TypeName"
                   SelectedValuePath="TypeName"
                   SelectedValue="{Binding Path=DevEntry}" Style="{DynamicResource ComboBoxStyle}" />
 
         <Label Grid.Row="2" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Select tool type:" />
-        <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="260" 
+        <ComboBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" IsEnabled="{Binding TypeSelectable}" HorizontalAlignment="Left" Width="260" 
                   ItemsSource="{Binding Path=DevSubEntries}"
                   DisplayMemberPath="TypeName"
                   SelectedValuePath="TypeName"
