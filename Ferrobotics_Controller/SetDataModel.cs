@@ -22,7 +22,7 @@ namespace Ferrobotics_Controller
         private string mWriteData = "";
         private string mNodeName = "ACF Control";
         private string mSetParamName_4 = "Payload:";
-        private string mSetParamUnit_4 = "Kg";
+        private string mSetParamUnit_4 = "kg";
         private bool mTargetDo = false;
         private bool mDisplay = false;
         private bool mInputValueEditable = false;
@@ -123,6 +123,7 @@ namespace Ferrobotics_Controller
         public void InitView()
         {
             mDevEntries = new CollectionView(mAcfDevTypeModel.DevEntries);
+            InputValueEditable = DevSubEntry.Contains("input directly by user") ? true : false;
         }
 
         
@@ -162,7 +163,7 @@ namespace Ferrobotics_Controller
                 NotifyPropertyChanged("DevSubEntries");
 
                 SetParamName_4 = (mDevEntry == "AOK-AAK") ? "Speed:" : "Payload:";
-                SetParamUnit_4 = (mDevEntry == "AOK-AAK") ? "RPM" : "Kg";
+                SetParamUnit_4 = (mDevEntry == "AOK-AAK") ? "RPM" : "kg";
 
                 NotifyPropertyChanged("SetParamName_4");
                 NotifyPropertyChanged("SetParamUnit_4");

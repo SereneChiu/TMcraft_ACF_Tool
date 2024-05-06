@@ -25,12 +25,12 @@ namespace VariableManager
 
         private Dictionary<string, decimal> mDevPayloadTable_Acf = new Dictionary<string, decimal>()
         {
-            { "Payload input directly by user)", (decimal)0.0 }
+            { "Payload input directly by user", (decimal)0.0 }
         };
 
         private Dictionary<string, decimal> mDevPayloadTable_Aok = new Dictionary<string, decimal>()
         {
-            { "Velocity input directly by user)", (decimal)0.0 }
+            { "Velocity input directly by user", (decimal)0.0 }
         };
 
 
@@ -49,7 +49,7 @@ namespace VariableManager
                 {
                     { mDevEntries[0], mDevPayloadTable_Acfk }
                   , { mDevEntries[1], mDevPayloadTable_Acf }
-                  , { mDevEntries[2], mDevPayloadTable_Acf }
+                  , { mDevEntries[2], mDevPayloadTable_Aok }
                 }; 
             } 
         }

@@ -51,9 +51,8 @@ namespace Ferrobotics_Setup.Model
         private string mDevEntry = "ACF-K";
         private string mDevSubEntry = "ACF-K / Dyn / 56819 00 (1.5 kg)";
         private string mInputValueName = "Payload (kg)";
-        private decimal mInputValue = 0;
+        private decimal mInputValue = (decimal)1.5;
         private bool mInputValueEditable = false;
-
 
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
@@ -262,6 +261,8 @@ namespace Ferrobotics_Setup.Model
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(3).Key, CurSelectDoIdx.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(4).Key, DoStatus.ToString());
             mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(5).Key, string.Format("\"{0}\"", DevEntry));
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(6).Key, string.Format("\"{0}\"", DevSubEntry));
+            mProjectVarCtrl.VariableModel.UpdateDictData(mProjectVarCtrl.VariableModel.VarTable.ElementAt(7).Key, string.Format("\"{0}\"", InputValue.ToString()));
         }
         public bool UpdateProjectVariableValueFromData()
         {
@@ -300,11 +301,6 @@ namespace Ferrobotics_Setup.Model
                     this.CurSelectDoIdx = out_do_index;
                 }
             }
-           
-            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type"))
-            {
-                this.DevEntry = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_tool_type"]?.VarValue?.Replace("\"", "");
-            }
 
             if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_do_type"))
             {
@@ -314,6 +310,26 @@ namespace Ferrobotics_Setup.Model
             if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_do_status"))
             {
                 this.DoStatus = (mProjectVarCtrl.VariableModel.VarTable["ferrobotics_do_status"]?.VarValue == "True") ? true : false;
+            }
+
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type"))
+            {
+                this.DevEntry = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_tool_type"]?.VarValue?.Replace("\"", "");
+            }
+
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool"))
+            {
+                this.DevSubEntry = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_tool"]?.VarValue?.Replace("\"", "");
+            }
+
+            if (mProjectVarCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_payload_vel"))
+            {
+                decimal rtn_value = 0;
+                string input_value = mProjectVarCtrl.VariableModel.VarTable["ferrobotics_payload_vel"]?.VarValue?.Replace("\"", "");
+                if (true == decimal.TryParse(input_value, out rtn_value))
+                {
+                    this.InputValue = rtn_value;
+                }
             }
 
             return rtn_result;

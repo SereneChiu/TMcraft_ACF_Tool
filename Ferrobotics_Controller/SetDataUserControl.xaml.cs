@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -18,24 +18,26 @@ namespace Ferrobotics_Controller
     public partial class SetDataUserControl : UserControl
     {
         private SetDataModel mSetDataModel = null;
-        public void UpdateEditMode()
-        {
-            mSetDataModel.Edit_Mode = !mSetDataModel.Edit_Mode;
-        }
 
         public SetDataUserControl(SetDataModel DataModel)
         {
             InitializeComponent();
 
             mSetDataModel = DataModel;
-            mSetDataModel.InitView();
             DataContext = mSetDataModel;
+
+            mSetDataModel.InitView();
         }
 
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             mSetDataModel.MergeStringData();
+        }
+
+        public void UpdateEditMode()
+        {
+            mSetDataModel.Edit_Mode = !mSetDataModel.Edit_Mode;
         }
     }
 

@@ -35,12 +35,30 @@ namespace Ferrobotics_Node
             mNodeViewModel.SetDataModel.BtnWriteVisible = Visibility.Hidden;
             DataContext = mNodeViewModel.SetDataModel;
             mNodeViewModel.SetDataModel.TypeSelectable = false;
-            mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
+
 
             if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type") == true)
             {
                 mNodeViewModel.SetDataModel.DevEntry = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_tool_type"].VarValue.Replace("\"", "");
             }
+
+            if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool"))
+            {
+                this.mNodeViewModel.SetDataModel.DevSubEntry = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_tool"]?.VarValue?.Replace("\"", "");
+            }
+
+            if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_payload_vel"))
+            {
+                decimal rtn_value = 0;
+                string input_value = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_payload_vel"]?.VarValue?.Replace("\"", "");
+                if (true == decimal.TryParse(input_value, out rtn_value))
+                {
+                    this.mNodeViewModel.SetDataModel.SetParam4 = rtn_value;
+                }
+            }
+
+            mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
+
 
             panel_ctrl.Content = mSetDataUserControl;
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
@@ -80,7 +98,7 @@ namespace Ferrobotics_Node
             save_data_table.Add("f_target", mNodeViewModel.SetDataModel.SetParam1.ToString());
             save_data_table.Add("f_zero", mNodeViewModel.SetDataModel.SetParam2.ToString());
             save_data_table.Add("t_ramp", mNodeViewModel.SetDataModel.SetParam3.ToString());
-            save_data_table.Add("f_payload", mNodeViewModel.SetDataModel.SetParam4.ToString());
+            save_data_table.Add("f_payload_vel", mNodeViewModel.SetDataModel.SetParam4.ToString());
             save_data_table.Add("f_do", mNodeViewModel.SetDataModel.TargetDo.ToString());
             save_data_table.Add("display", mNodeViewModel.SetDataModel.Display.ToString());
             mTMcraftNodeAPI?.DataStorageProvider.SaveData(save_data_table);
@@ -109,8 +127,8 @@ namespace Ferrobotics_Node
                                         , target_do));
             }
 
-            
-            script_list.Add(string.Format("var_node_name=\"{0}\"\r\nvar_f_target=\"{1}\"\r\nvar_f_zero=\"{2}\"\r\nvar_t_ramp=\"{3}\"\r\nvar_f_payload=\"{4}\""
+
+            script_list.Add(string.Format("var_node_name=\"{0}\"\r\nvar_f_target=\"{1}\"\r\nvar_f_zero=\"{2}\"\r\nvar_t_ramp=\"{3}\"\r\nvar_f_payload_vel=\"{4}\""
                                          , mNodeViewModel.SetDataModel.NodeName.ToString()
                                          , mNodeViewModel.SetDataModel.SetParam1.ToString()
                                          , mNodeViewModel.SetDataModel.SetParam2.ToString()
@@ -123,11 +141,11 @@ namespace Ferrobotics_Node
                 if (mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_type") == false
                  || mProjectVariableCtrl.CheckVariableExist("var_ferrobotics_do_channel") == false)
                 {
-                    script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = Disable\")");
+                    script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_ferrobotics_payload_vel+ Ctrl(\"\\r\\n\")+\"DO Status = Disable\")");
                 }
                 else
                 {
-                    script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_f_payload+ Ctrl(\"\\r\\n\")+\"DO Status = \"+IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel])");
+                    script_list.Add("Display(\"Node name = \"+var_node_name+Ctrl(\"\\r\\n\")+\"f_target = \"+var_f_target+Ctrl(\"\\r\\n\")+\"f_zero = \"+var_f_zero+Ctrl(\"\\r\\n\")+\"t_ramp = \"+var_t_ramp + Ctrl(\"\\r\\n\")+\"Payload or Velocity = \"+var_ferrobotics_payload_vel+ Ctrl(\"\\r\\n\")+\"DO Status = \"+IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel])");
                 }
             }
 
@@ -157,7 +175,7 @@ namespace Ferrobotics_Node
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_target", out f_target_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_zero", out f_zero_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("t_ramp", out t_ramp_str);
-            mTMcraftNodeAPI.DataStorageProvider.GetData("f_payload", out f_payload_str);
+            mTMcraftNodeAPI.DataStorageProvider.GetData("f_payload_vel", out f_payload_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("f_do", out f_do_str);
             mTMcraftNodeAPI.DataStorageProvider.GetData("display", out display_str);
 

@@ -24,7 +24,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/> <!--0-->
             <RowDefinition Height="30"/> <!--1-->
-            <RowDefinition Height="210"/><!--2-->
+            <RowDefinition Height="150"/><!--2-->
             <RowDefinition Height="30"/> <!--3-->
             <RowDefinition Height="30"/> <!--4-->
             <RowDefinition Height="30"/> <!--5-->
