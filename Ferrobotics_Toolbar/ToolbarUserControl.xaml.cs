@@ -27,6 +27,7 @@ namespace Ferrobotics_Toolbar
 
         private ToolbarViewModel mToolbarViewModel = new ToolbarViewModel();
         private ICommunicationCtrl mCommunicationCtrl = new CommunicationCtrl();
+        private IProjectVariableCtrl mProjectVariableCtrl = new ProjectVariableCtrl();
 
         private static DispatcherTimer readDataTimer = new DispatcherTimer();
 
@@ -39,6 +40,9 @@ namespace Ferrobotics_Toolbar
             chb_edit_mode.Visibility = Visibility.Hidden;
 
             mToolbarViewModel.SetDataModel.TypeSelectable = true;
+
+
+
             mSetDataUserControl = new SetDataUserControl(mToolbarViewModel.SetDataModel);
             page_control.Content = mSetDataUserControl;
 
@@ -56,6 +60,30 @@ namespace Ferrobotics_Toolbar
         public void InitializeToolbar(TMcraftToolbarAPI Api)
         {
             mTMcraftToolbarAPI = Api;
+
+
+            mProjectVariableCtrl.UpdateFunctionPtr(mTMcraftToolbarAPI.VariableProvider.GetProjectVariableList);
+            mProjectVariableCtrl.UpdateDataFromProjectVariable();
+
+            if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool_type") == true)
+            {
+                mToolbarViewModel.SetDataModel.DevEntry = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_tool_type"].VarValue.Replace("\"", "");
+            }
+
+            if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_tool"))
+            {
+                this.mToolbarViewModel.SetDataModel.DevSubEntry = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_tool"]?.VarValue?.Replace("\"", "");
+            }
+
+            if (mProjectVariableCtrl.VariableModel.VarTable.ContainsKey("ferrobotics_payload_vel"))
+            {
+                decimal rtn_value = 0;
+                string input_value = mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_payload_vel"]?.VarValue?.Replace("\"", "");
+                if (true == decimal.TryParse(input_value, out rtn_value))
+                {
+                    this.mToolbarViewModel.SetDataModel.SetParam4 = rtn_value;
+                }
+            }
         }
 
         private void btn_connect_Click(object sender, RoutedEventArgs e)

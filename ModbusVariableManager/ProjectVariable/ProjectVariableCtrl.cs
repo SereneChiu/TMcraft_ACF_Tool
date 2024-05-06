@@ -37,6 +37,11 @@ namespace VariableManager
             this.GetProjectVariableList = GetProjectVariableList;
         }
 
+        public void UpdateFunctionPtr(GetProjectVariableListFunc GetProjectVariableList)
+        {
+            this.GetProjectVariableList = GetProjectVariableList;
+        }
+
 
         private bool CheckFunctionExist()
         {
@@ -69,7 +74,10 @@ namespace VariableManager
 
         public bool UpdateDataFromProjectVariable()
         {
-            if (CheckFunctionExist() == false) { return false; }
+            if (GetProjectVariableList == null) 
+            { 
+                return false; 
+            }
 
             List<VariableInfo> rtn_var_list = new List<VariableInfo>();
             if (false == GetProjectVarList(ref rtn_var_list))
