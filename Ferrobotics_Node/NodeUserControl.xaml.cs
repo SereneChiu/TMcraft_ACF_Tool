@@ -91,16 +91,22 @@ namespace Ferrobotics_Node
             List<string> script_list = new List<string>();
             bool rtn_result = false;
 
-            mNodeViewModel.SetDataModel.MergeStringData();
+            mNodeViewModel.SetDataModel.MergeStringDataEx("var_ferrobotics_payload_vel");
 
             Dictionary<string, string> save_data_table = new Dictionary<string, string>();
             save_data_table.Add("node_name", mNodeViewModel.SetDataModel.NodeName);
             save_data_table.Add("f_target", mNodeViewModel.SetDataModel.SetParam1.ToString());
             save_data_table.Add("f_zero", mNodeViewModel.SetDataModel.SetParam2.ToString());
             save_data_table.Add("t_ramp", mNodeViewModel.SetDataModel.SetParam3.ToString());
-            save_data_table.Add("f_payload_vel", mNodeViewModel.SetDataModel.SetParam4.ToString());
             save_data_table.Add("f_do", mNodeViewModel.SetDataModel.TargetDo.ToString());
             save_data_table.Add("display", mNodeViewModel.SetDataModel.Display.ToString());
+
+            if (mNodeViewModel.SetDataModel.DevEntry == "AOK-AAK")
+            {
+                save_data_table.Add("f_payload_vel", mNodeViewModel.SetDataModel.SetParam4.ToString());
+            }
+
+
             mTMcraftNodeAPI?.DataStorageProvider.SaveData(save_data_table);
 
             foreach (string str in save_data_table.Keys)
@@ -110,17 +116,39 @@ namespace Ferrobotics_Node
 
             mProjectVariableCtrl.UpdateProjectVariableFromData(ref rtn_result);
 
-            string cmd = string.Format("GetBytes(\"{0}\")"
+            string cmd1 = string.Format("GetBytes(\"{0}\")"
                                    , mNodeViewModel.SetDataModel.WriteData);
+
+            string cmd2 = string.Format("GetBytes(\"{0}\")"
+                                   , mNodeViewModel.SetDataModel.WriteData2);
 
             string target_do = (mNodeViewModel.SetDataModel.TargetDo == true) ? "1" : "0";
 
             script_list.Add("Socket ferrobotics = var_ferrobotics_ip, var_ferrobotics_port");
             script_list.Add("socket_open(\"ferrobotics\")");
-            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
+
+
+            cmd1 = string.Format("socket_send(\"ferrobotics\", {0})", cmd1);
+            cmd2 = string.Format("socket_send(\"ferrobotics\", {0})", cmd2);
+
+            script_list.Add("if (var_ferrobotics_tool_type == \"AOK-AAK\"){");
+
+            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd1));
             script_list.Add("Sleep(5)");
-            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd));
+            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd1));
             script_list.Add("Sleep(5)");
+
+            script_list.Add("}");
+
+            script_list.Add("else{");
+
+            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd2));
+            script_list.Add("Sleep(5)");
+            script_list.Add(string.Format("socket_send(\"ferrobotics\", {0})", cmd2));
+            script_list.Add("Sleep(5)");
+            script_list.Add("}");
+
+
             if (mProjectVariableCtrl.VariableModel.VarTable["ferrobotics_do_status"].VarValue == "True")
             {
                 script_list.Add(string.Format("IO[var_ferrobotics_do_type].DO[var_ferrobotics_do_channel] = {0}"
@@ -133,7 +161,7 @@ namespace Ferrobotics_Node
                                          , mNodeViewModel.SetDataModel.SetParam1.ToString()
                                          , mNodeViewModel.SetDataModel.SetParam2.ToString()
                                          , mNodeViewModel.SetDataModel.SetParam3.ToString()
-                                         , mNodeViewModel.SetDataModel.SetParam4.ToString()
+                                         , "var_ferrobotics_payload_vel"
                                          ));
 
             if (mNodeViewModel.SetDataModel.Display == true)
@@ -193,10 +221,15 @@ namespace Ferrobotics_Node
             mNodeViewModel.SetDataModel.SetParam1 = Convert.ToDecimal(f_target);
             mNodeViewModel.SetDataModel.SetParam2 = Convert.ToDecimal(f_zero);
             mNodeViewModel.SetDataModel.SetParam3 = Convert.ToDecimal(t_ramp);
-            mNodeViewModel.SetDataModel.SetParam4 = Convert.ToDecimal(f_payload);
             mNodeViewModel.SetDataModel.TargetDo = f_do;
             mNodeViewModel.SetDataModel.NodeName = node_name_str;
             mNodeViewModel.SetDataModel.Display = display;
+
+            if (mNodeViewModel.SetDataModel.DevEntry == "AOK-AAK")
+            {
+                mNodeViewModel.SetDataModel.SetParam4 = Convert.ToDecimal(f_payload);
+            }
+
         }
 
         private void radio_tool_state_Checked(object sender, RoutedEventArgs e)

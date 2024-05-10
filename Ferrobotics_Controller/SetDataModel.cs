@@ -20,12 +20,12 @@ namespace Ferrobotics_Controller
         private decimal mSetParam3 = 0;
         private decimal mSetParam4 = 0;
         private string mWriteData = "";
+        private string mWriteData2 = "";
         private string mNodeName = "ACF Control";
         private string mSetParamName_4 = "Payload:";
         private string mSetParamUnit_4 = "kg";
         private bool mTargetDo = false;
         private bool mDisplay = false;
-        private bool mInputValueEditable = false;
         private bool mTypeSelectable = false;
         private Visibility mBtnWriteVisible = Visibility.Visible;
         private CollectionView mDevEntries;
@@ -101,6 +101,7 @@ namespace Ferrobotics_Controller
             } 
         }
         public string WriteData { get { return mWriteData; } set { mWriteData = value; NotifyPropertyChanged("WriteData"); } }
+        public string WriteData2 { get { return mWriteData2; } set { mWriteData2 = value; NotifyPropertyChanged("WriteData2"); } }
         public string NodeName { get { return mNodeName; } set { mNodeName = value; NotifyPropertyChanged("NodeName"); } }
 
         public string SetParamName_4 { get { return mSetParamName_4; } set { mSetParamName_4 = value; NotifyPropertyChanged("SetParamName_4"); } }
@@ -108,7 +109,6 @@ namespace Ferrobotics_Controller
 
         public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
         public bool Display { get { return mDisplay; } set { mDisplay = value; NotifyPropertyChanged("Display"); } }
-        public bool InputValueEditable { get { return mInputValueEditable; } set { mInputValueEditable = value; NotifyPropertyChanged("InputValueEditable"); } }
         public bool TypeSelectable { get { return mTypeSelectable; } set { mTypeSelectable = value; NotifyPropertyChanged("TypeSelectable"); } }
         public string TitleDesc { get { return mTitleDesc; } set { mTitleDesc = value; NotifyPropertyChanged("TitleDesc"); } }
         public string TargetDesc { get { return mTargetDesc; } set { mTargetDesc = value; NotifyPropertyChanged("TargetDesc"); } }
@@ -123,7 +123,6 @@ namespace Ferrobotics_Controller
         public void InitView()
         {
             mDevEntries = new CollectionView(mAcfDevTypeModel.DevEntries);
-            InputValueEditable = DevSubEntry.Contains("input directly by user") ? true : false;
         }
 
         
@@ -186,7 +185,6 @@ namespace Ferrobotics_Controller
 
                 SetParam4 = mAcfDevTypeModel.DevInfoTable[type][mDevSubEntry];
 
-                InputValueEditable = (SetParam4 == (decimal)0.0) ? true : false;
                 NotifyPropertyChanged("SetParam4");
             }
         }
@@ -194,10 +192,25 @@ namespace Ferrobotics_Controller
         public void MergeStringData()
         {
             mWriteData = string.Format("ferbak1040 {0} {1} {2} {3} 0"
-                                             , SetParam1.ToString()
-                                             , SetParam2.ToString()
-                                             , SetParam3.ToString()
-                                             , SetParam4.ToString());
+                                            , SetParam1.ToString()
+                                            , SetParam2.ToString()
+                                            , SetParam3.ToString()
+                                            , SetParam4.ToString());
+        }
+
+        public void MergeStringDataEx(string Param4_Str)
+        {
+            mWriteData2 = string.Format("ferbak1040 {0} {1} {2} \" + {3} + \" 0"
+                                           , SetParam1.ToString()
+                                           , SetParam2.ToString()
+                                           , SetParam3.ToString()
+                                           , Param4_Str);
+
+            mWriteData = string.Format("ferbak1040 {0} {1} {2} {3} 0"
+                                            , SetParam1.ToString()
+                                            , SetParam2.ToString()
+                                            , SetParam3.ToString()
+                                            , SetParam4.ToString());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

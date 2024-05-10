@@ -62,7 +62,7 @@
                               SelectedValuePath="TypeName"
                               SelectedValue="{Binding Path=DevSubEntry}" Style="{DynamicResource ComboBoxStyle}" />
 
-                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding InputValue}" Style="{DynamicResource TextBoxStyle}" IsEnabled="{Binding InputValueEditable}"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding InputValue}" Style="{DynamicResource TextBoxStyle}" IsEnabled="True"/>
                     <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding DeviceName}" Style="{DynamicResource TextBoxStyle}"/>
                     <Label Grid.Row="8" Grid.Column="1"  Content="{Binding CurSelectDoStr, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource LabelStyle}"/>
                     <Button Grid.Row="8" Grid.Column="2"  Content="Browse..." Style="{DynamicResource StandardButton}" Name="btn_browse" Click="btn_browse_Click" />

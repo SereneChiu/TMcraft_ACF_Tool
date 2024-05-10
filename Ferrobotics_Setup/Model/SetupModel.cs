@@ -52,7 +52,6 @@ namespace Ferrobotics_Setup.Model
         private string mDevSubEntry = "ACF-K / Dyn / 56819 00 (1.5 kg)";
         private string mInputValueName = "Payload (kg)";
         private decimal mInputValue = (decimal)1.5;
-        private bool mInputValueEditable = false;
 
         public string Ip { get { return mIp; } set { mIp = value; NotifyPropertyChanged("Ip"); } }
         public ushort Port { get { return mPort; } set { mPort = value; NotifyPropertyChanged("Port"); } }
@@ -72,18 +71,6 @@ namespace Ferrobotics_Setup.Model
             }
         }
 
-        public bool InputValueEditable
-        {
-            get
-            {
-                return mInputValueEditable;
-            }
-            set
-            {
-                mInputValueEditable = value;
-                NotifyPropertyChanged("InputValueEditable");
-            }
-        }
 
         
         public bool Edit_Mode { get { return mEdit_Mode; } set { mEdit_Mode = value; NotifyPropertyChanged("Edit_Mode"); } }
@@ -239,10 +226,6 @@ namespace Ferrobotics_Setup.Model
                 }
 
                 InputValue = mProjectVarCtrl.AcfDevTypeModel.DevInfoTable[type][mDevSubEntry];
-
-                InputValueEditable = (InputValue == (decimal)0.0) ? true : false;
-
-                NotifyPropertyChanged("InputValueEditable");
                 NotifyPropertyChanged("InputValue");
                 NotifyPropertyChanged("DevSubEntry");
             }
