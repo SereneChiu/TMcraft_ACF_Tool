@@ -48,7 +48,7 @@
         <TextBox Grid.Row="3" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="s" />
     
         <TextBox Grid.Row="4" Grid.Column="0" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamName_4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" />
-        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Style="{DynamicResource TextBoxStyleForWrite}" Text="{Binding SetParam4, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:0.0}}" IsEnabled="{Binding InputValueEditable}"/>
         <TextBox Grid.Row="4" Grid.Column="2" Style="{DynamicResource TextBoxStyle}" Text="{Binding SetParamUnit_4, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Row="5" Grid.Column="0" Style="{DynamicResource LabelStyle}" Content="Select tool type:" />

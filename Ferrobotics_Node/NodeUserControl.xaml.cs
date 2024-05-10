@@ -57,6 +57,15 @@ namespace Ferrobotics_Node
                 }
             }
 
+            if (mNodeViewModel.SetDataModel.DevEntry == "AOK-AAK")
+            {
+                mNodeViewModel.SetDataModel.InputValueEditable = true;
+            }
+            else
+            {
+                mNodeViewModel.SetDataModel.InputValueEditable = false;
+            }
+
             mSetDataUserControl = new SetDataUserControl(mNodeViewModel.SetDataModel);
 
 

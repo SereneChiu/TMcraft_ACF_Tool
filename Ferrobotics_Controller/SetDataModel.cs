@@ -107,6 +107,13 @@ namespace Ferrobotics_Controller
         public string SetParamName_4 { get { return mSetParamName_4; } set { mSetParamName_4 = value; NotifyPropertyChanged("SetParamName_4"); } }
         public string SetParamUnit_4 { get { return mSetParamUnit_4; } set { mSetParamUnit_4 = value; NotifyPropertyChanged("SetParamUnit_4"); } }
 
+        private bool mInputValueEditable = false;
+        public bool InputValueEditable
+        {
+            get { return mInputValueEditable; }
+            set { mInputValueEditable = value; NotifyPropertyChanged("InputValueEditable"); }
+        }
+
         public bool TargetDo { get { return mTargetDo; } set { mTargetDo = value; NotifyPropertyChanged("TargetDo"); } }
         public bool Display { get { return mDisplay; } set { mDisplay = value; NotifyPropertyChanged("Display"); } }
         public bool TypeSelectable { get { return mTypeSelectable; } set { mTypeSelectable = value; NotifyPropertyChanged("TypeSelectable"); } }
